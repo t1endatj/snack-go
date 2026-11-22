@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewProfile"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="128dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <!-- tiêu đề và khung avatar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_top_header_gradient"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="24dp"
+                android:paddingBottom="20dp">
+
+                <!-- khung avatar tròn 112dp có nút chỉnh sửa -->
+                <FrameLayout
+                    android:id="@+id/layoutAvatarContainer"
+                    android:layout_width="112dp"
+                    android:layout_height="112dp"
+                    android:layout_gravity="center_horizontal"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="104dp"
+                        android:layout_height="104dp"
+                        android:layout_gravity="center"
+                        android:background="@color/avatar_bg"
+                        android:clickable="true"
+                        android:contentDescription="@null"
+                        android:focusable="true"
+                        android:padding="24dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_person"
+                        app:shapeAppearanceOverlay="@style/ShapeAppearance.SnackGo.Circle"
+                        app:strokeColor="@color/surface"
+                        app:strokeWidth="3dp"
+                        app:tint="@color/avatar_tint" />
+
+                    <FrameLayout
+                        android:id="@+id/btnEditAvatar"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_gravity="bottom|end"
+                        android:background="@drawable/bg_avatar_badge"
+                        android:clickable="true"
+                        android:elevation="6dp"
+                        android:focusable="true">
+
+                        <ImageView
+                            android:id="@+id/ivCameraBadge"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_gravity="center"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_camera"
+                            app:tint="@color/surface" />
+
+                    </FrameLayout>
+
+                </FrameLayout>
+
+                <!-- họ tên và email -->
+                <TextView
+                    android:id="@+id/tvFullName"
+                    style="@style/TextAppearance.SnackGo.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    style="@style/TextAppearance.SnackGo.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <!-- nội dung hồ sơ chính -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- card thông tin cá nhân -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_phone"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/tvPhone"
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:textColor="@color/primary_ink"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="10dp"
+                            android:background="@color/divider" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <FrameLayout
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_location"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                android:id="@+id/tvAddress"
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:textColor="@color/primary_ink"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- card danh sách chức năng -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <!-- dòng 1: chỉnh sửa hồ sơ -->
+                        <RelativeLayout
+                            android:id="@+id/rowEditProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingHorizontal="16dp">
+
+                            <FrameLayout
+                                android:id="@+id/frameIconEdit"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_person"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="14dp"
+                                android:layout_toEndOf="@id/frameIconEdit"
+                                android:text="@string/label_edit_profile"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chevron_right" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@color/divider" />
+
+                        <!-- dòng 2: đơn hàng của tôi -->
+                        <RelativeLayout
+                            android:id="@+id/rowMyOrders"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingHorizontal="16dp">
+
+                            <FrameLayout
+                                android:id="@+id/frameIconOrders"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_receipt"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="14dp"
+                                android:layout_toEndOf="@id/frameIconOrders"
+                                android:text="@string/label_my_orders"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chevron_right" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@color/divider" />
+
+                        <!-- dòng 3: đổi mật khẩu -->
+                        <RelativeLayout
+                            android:id="@+id/rowChangePassword"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingHorizontal="16dp">
+
+                            <FrameLayout
+                                android:id="@+id/frameIconPassword"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_lock"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="14dp"
+                                android:layout_toEndOf="@id/frameIconPassword"
+                                android:text="@string/label_change_password"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chevron_right" />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginHorizontal="16dp"
+                            android:background="@color/divider" />
+
+                        <!-- dòng 4: xem lại giới thiệu -->
+                        <RelativeLayout
+                            android:id="@+id/rowOnboarding"
+                            android:layout_width="match_parent"
+                            android:layout_height="60dp"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:paddingHorizontal="16dp">
+
+                            <FrameLayout
+                                android:id="@+id/frameIconInfo"
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:background="@drawable/bg_chip_logo">
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_gravity="center"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_info"
+                                    app:tint="@color/primary_ink" />
+                            </FrameLayout>
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="14dp"
+                                android:layout_toEndOf="@id/frameIconInfo"
+                                android:text="@string/label_view_onboarding"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_chevron_right" />
+
+                        </RelativeLayout>
+
+                        <!-- dòng 5: quản lý sản phẩm dành cho quản trị viên -->
+                        <LinearLayout
+                            android:id="@+id/layoutAdminContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="16dp"
+                                android:background="@color/divider" />
+
+                            <RelativeLayout
+                                android:id="@+id/rowAdminProduct"
+                                android:layout_width="match_parent"
+                                android:layout_height="60dp"
+                                android:background="?attr/selectableItemBackground"
+                                android:clickable="true"
+                                android:focusable="true"
+                                android:paddingHorizontal="16dp">
+
+                                <FrameLayout
+                                    android:id="@+id/frameIconAdmin"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_centerVertical="true"
+                                    android:background="@drawable/bg_chip_logo">
+
+                                    <ImageView
+                                        android:layout_width="20dp"
+                                        android:layout_height="20dp"
+                                        android:layout_gravity="center"
+                                        android:contentDescription="@null"
+                                        android:src="@drawable/ic_placeholder_product"
+                                        app:tint="@color/accent_orange" />
+                                </FrameLayout>
+
+                                <TextView
+                                    style="@style/TextAppearance.SnackGo.Title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginStart="14dp"
+                                    android:layout_toEndOf="@id/frameIconAdmin"
+                                    android:text="@string/label_admin_product_management"
+                                    android:textColor="@color/accent_orange"
+                                    android:textSize="15sp" />
+
+                                <ImageView
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_centerVertical="true"
+                                    android:contentDescription="@null"
+                                    android:src="@drawable/ic_chevron_right" />
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- nút đăng xuất -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnLogout"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/label_logout"
+                    android:textColor="@color/red"
+                    app:cornerRadius="26dp"
+                    app:icon="@drawable/ic_logout"
+                    app:iconGravity="textStart"
+                    app:iconPadding="10dp"
+                    app:iconTint="@color/red"
+                    app:strokeColor="@color/red"
+                    app:strokeWidth="1.5dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

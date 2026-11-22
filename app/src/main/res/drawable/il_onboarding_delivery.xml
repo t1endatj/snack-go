@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="220dp"
+    android:height="220dp"
+    android:viewportWidth="220"
+    android:viewportHeight="220">
+
+    <!-- Ambient Sparkles -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M30,35 A8,8 0 1,1 30,34.9 Z M195,45 A10,10 0 1,1 195,44.9 Z M25,120 A6,6 0 1,1 25,119.9 Z" />
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M40,20 L42,28 L50,30 L42,32 L40,40 L38,32 L30,30 L38,28 Z" />
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M185,25 L187,32 L194,34 L187,36 L185,43 L183,36 L176,34 L183,32 Z" />
+
+    <!-- Fast Speed / Wind Motion Lines -->
+    <path
+        android:fillColor="#66FFFFFF"
+        android:pathData="M15,95 H55 V98 H15 Z M5,112 H45 V115 H5 Z M20,130 H60 V133 H20 Z M8,145 H38 V148 H8 Z" />
+
+    <!-- Soft Ground Shadow -->
+    <path
+        android:fillColor="#26000000"
+        android:pathData="M45,188 C75,182 175,182 195,188 C175,194 75,194 45,188 Z" />
+
+    <!-- Modern Delivery Scooter -->
+    <group
+        android:pivotX="120"
+        android:pivotY="140">
+
+        <!-- Rear Wheel (Ink Outer, Grey Inner, Amber Hub) -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M78,162 A22,22 0 1,1 78,161.9 Z" />
+        <path
+            android:fillColor="#EEEEEE"
+            android:pathData="M78,162 A12,12 0 1,1 78,161.9 Z" />
+        <path
+            android:fillColor="#FFB300"
+            android:pathData="M78,162 A5,5 0 1,1 78,161.9 Z" />
+
+        <!-- Front Wheel -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M168,162 A22,22 0 1,1 168,161.9 Z" />
+        <path
+            android:fillColor="#EEEEEE"
+            android:pathData="M168,162 A12,12 0 1,1 168,161.9 Z" />
+        <path
+            android:fillColor="#FFB300"
+            android:pathData="M168,162 A5,5 0 1,1 168,161.9 Z" />
+
+        <!-- Scooter Chassis / Frame (Ink & Orange) -->
+        <!-- Floorboard -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M95,152 H145 V160 H95 Z" />
+
+        <!-- Front Fork and Stem -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M160,110 L169,162 L163,163 L154,110 Z" />
+
+        <!-- Front Cowling / Shield (Vibrant Orange) -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M142,105 L168,105 L155,148 L136,148 Z" />
+
+        <!-- Handlebar & Grip -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M148,96 H166 V102 H148 Z" />
+        <!-- Headlight (Glowing Yellow) -->
+        <path
+            android:fillColor="#FFF176"
+            android:pathData="M168,108 L175,108 L172,118 L166,118 Z" />
+        <!-- Light Beam -->
+        <path
+            android:fillColor="#33FFF59D"
+            android:pathData="M175,108 L215,95 L215,130 L172,118 Z" />
+
+        <!-- Rear Fender & Seat Body -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M65,138 C65,124 85,120 115,120 L120,148 L70,148 Z" />
+        <!-- Soft Seat (Ink) -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M92,115 C92,110 100,108 122,108 L124,120 L92,120 Z" />
+
+        <!-- SnackGo Thermal Delivery Box (Mounted on Rear) -->
+        <!-- Box Body -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M52,78 H98 V126 H52 Z" />
+        <!-- Box Top Lid (Orange) -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M48,72 H102 V80 H48 Z" />
+        <!-- Box Stripe -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M52,94 H98 V106 H52 Z" />
+        <!-- Snack Star Logo on Box -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M75,96 L77,100 L81,100 L78,102 L79,106 L75,103 L71,106 L72,102 L69,100 L73,100 Z" />
+    </group>
+
+    <!-- Fast 15-Minute Badge (Top Right Floating) -->
+    <group
+        android:pivotX="165"
+        android:pivotY="45"
+        android:rotation="-8">
+        <!-- Badge Pill Background -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M140,32 H188 C194,32 198,36 198,42 C198,48 194,52 188,52 H140 C134,52 130,48 130,42 C130,36 134,32 140,32 Z" />
+        <!-- Flash Bolt (Amber) -->
+        <path
+            android:fillColor="#FFB300"
+            android:pathData="M142,35 L136,44 H142 L139,50 L148,41 H142 Z" />
+        <!-- "15m" Text Lines -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M152,38 H155 V47 H152 Z M158,38 H168 V40 H160 V42 H166 C168,42 169,43 169,45 L169,46 C169,47 168,48 166,48 H158 V46 H166 V44 H158 Z" />
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M173,41 H176 V47 H173 Z M176,43 H182 V47 H179 V45 H176 Z M182,43 H187 V47 H184 V45 H182 Z" />
+    </group>
+
+</vector>

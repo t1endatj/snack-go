@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewCart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="128dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- tiêu đề giỏ hàng -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_top_header_gradient"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvCartTitle"
+                    style="@style/TextAppearance.SnackGo.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_cart_title"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/tvCartCountSubtitle"
+                    style="@style/TextAppearance.SnackGo.Body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/secondary_text" />
+
+            </LinearLayout>
+
+            <!-- danh sách sản phẩm trong giỏ -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCartItems"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- trạng thái giỏ hàng trống -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyCart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="36dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_nav_cart"
+                    app:tint="@color/avatar_tint" />
+
+                <TextView
+                    style="@style/TextAppearance.SnackGo.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="@string/label_empty_cart_title"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnExplore"
+                    style="@style/Widget.SnackGo.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/accent_orange"
+                    android:paddingHorizontal="24dp"
+                    android:text="@string/label_explore_snacks"
+                    android:textColor="@color/surface" />
+
+            </LinearLayout>
+
+            <!-- nội dung giỏ hàng gồm mã giảm giá và tóm tắt -->
+            <LinearLayout
+                android:id="@+id/layoutCartContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="12dp">
+
+                <!-- card mã giảm giá -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPromo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="16dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <!-- ô nhập mã khuyến mãi dạng bo tròn -->
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/tilPromoCode"
+                                style="@style/Widget.Material3.TextInputLayout.FilledBox"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:hint="@string/label_promo_code"
+                                app:boxBackgroundColor="@color/promo_input_bg"
+                                app:boxCornerRadiusBottomEnd="16dp"
+                                app:boxCornerRadiusBottomStart="16dp"
+                                app:boxCornerRadiusTopEnd="16dp"
+                                app:boxCornerRadiusTopStart="16dp"
+                                app:boxStrokeWidth="0dp"
+                                app:boxStrokeWidthFocused="0dp"
+                                app:errorEnabled="true">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/etPromoCode"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:inputType="textCapCharacters"
+                                    android:maxLines="1" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnApplyPromo"
+                                style="@style/Widget.SnackGo.Button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="48dp"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginBottom="8dp"
+                                android:backgroundTint="@color/primary_ink"
+                                android:paddingHorizontal="16dp"
+                                android:text="@string/label_apply"
+                                android:textColor="@color/surface"
+                                android:textSize="13sp" />
+
+                        </LinearLayout>
+
+                        <!-- thông báo mã khuyến mãi đã áp dụng -->
+                        <LinearLayout
+                            android:id="@+id/layoutPromoApplied"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_check" />
+
+                            <TextView
+                                android:id="@+id/tvPromoStatus"
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="6dp"
+                                android:layout_weight="1"
+                                android:text="@string/label_promo_applied"
+                                android:textColor="@color/green_completed"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/btnRemovePromo"
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="4dp"
+                                android:text="@string/label_cancel"
+                                android:textColor="@color/red"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- card tóm tắt đơn hàng -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSummary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    app:cardBackgroundColor="@color/surface"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="2dp"
+                    app:strokeColor="@color/divider"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="20dp">
+
+                        <!-- dòng tạm tính -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_subtotal" />
+
+                            <TextView
+                                android:id="@+id/tvSubtotal"
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                        <!-- dòng phí vận chuyển -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_delivery_fee" />
+
+                            <TextView
+                                android:id="@+id/tvDeliveryFee"
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                        <!-- dòng giảm giá -->
+                        <RelativeLayout
+                            android:id="@+id/layoutDiscountRow"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Body"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_discount"
+                                android:textColor="@color/green_completed" />
+
+                            <TextView
+                                android:id="@+id/tvDiscount"
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:textColor="@color/green_completed"
+                                android:textSize="15sp" />
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_marginVertical="14dp"
+                            android:background="@color/divider" />
+
+                        <!-- dòng tổng tiền -->
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                style="@style/TextAppearance.SnackGo.Title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/label_total"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/tvTotal"
+                                style="@style/TextAppearance.SnackGo.Price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:textColor="@color/red"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- nút đặt hàng -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnCheckout"
+                    style="@style/Widget.SnackGo.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="16dp"
+                    android:backgroundTint="@color/primary_ink"
+                    android:text="@string/label_checkout_button"
+                    android:textColor="@color/surface"
+                    app:icon="@drawable/ic_arrow_forward"
+                    app:iconGravity="textEnd"
+                    app:iconPadding="12dp"
+                    app:iconTint="@color/surface" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

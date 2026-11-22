@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.SnackGo" parent="Theme.Material3.Light.NoActionBar">
+        <!-- Primary Brand Colors -->
+        <item name="colorPrimary">@color/primary_ink</item>
+        <item name="colorOnPrimary">@color/surface</item>
+        <item name="colorSecondary">@color/accent_orange</item>
+        <item name="colorOnSecondary">@color/surface</item>
+        <item name="colorTertiary">@color/amber</item>
+        <item name="colorError">@color/red</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorSurface">@color/surface</item>
+        <item name="colorOnSurface">@color/primary_ink</item>
+        <item name="colorOnSurfaceVariant">@color/secondary_text</item>
+
+        <!-- Material 3 Container Colors (Override grey container tint for BottomNav) -->
+        <item name="colorSurfaceContainer">@color/surface</item>
+        <item name="colorSurfaceContainerLowest">@color/surface</item>
+        <item name="colorSurfaceContainerLow">@color/surface</item>
+        <item name="colorSurfaceContainerHigh">@color/surface</item>
+        <item name="colorSurfaceContainerHighest">@color/surface</item>
+
+        <!-- Bottom Navigation Active Pill Container Color -->
+        <item name="colorSecondaryContainer">@color/indicator_light_orange</item>
+        <item name="colorOnSecondaryContainer">@color/accent_orange</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+
+        <!-- App-wide Font -->
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+
+        <!-- Material 3 Text Appearances -->
+        <item name="textAppearanceDisplayLarge">@style/TextAppearance.SnackGo.Display.Large</item>
+        <item name="textAppearanceDisplayMedium">@style/TextAppearance.SnackGo.Display.Medium</item>
+        <item name="textAppearanceDisplaySmall">@style/TextAppearance.SnackGo.Display.Small</item>
+        <item name="textAppearanceHeadlineLarge">@style/TextAppearance.SnackGo.Headline.Large</item>
+        <item name="textAppearanceHeadlineMedium">@style/TextAppearance.SnackGo.Headline.Medium</item>
+        <item name="textAppearanceHeadlineSmall">@style/TextAppearance.SnackGo.Headline.Small</item>
+        <item name="textAppearanceTitleLarge">@style/TextAppearance.SnackGo.Title.Large</item>
+        <item name="textAppearanceTitleMedium">@style/TextAppearance.SnackGo.Title.Medium</item>
+        <item name="textAppearanceTitleSmall">@style/TextAppearance.SnackGo.Title.Small</item>
+        <item name="textAppearanceBodyLarge">@style/TextAppearance.SnackGo.Body.Large</item>
+        <item name="textAppearanceBodyMedium">@style/TextAppearance.SnackGo.Body.Medium</item>
+        <item name="textAppearanceBodySmall">@style/TextAppearance.SnackGo.Body.Small</item>
+        <item name="textAppearanceLabelLarge">@style/TextAppearance.SnackGo.Label.Large</item>
+        <item name="textAppearanceLabelMedium">@style/TextAppearance.SnackGo.Label.Medium</item>
+        <item name="textAppearanceLabelSmall">@style/TextAppearance.SnackGo.Label.Small</item>
+
+        <!-- Component Styles -->
+        <item name="materialCardViewStyle">@style/Widget.SnackGo.CardView</item>
+        <item name="materialButtonStyle">@style/Widget.SnackGo.Button</item>
+        <item name="chipStyle">@style/Widget.SnackGo.Chip</item>
+        <item name="bottomNavigationStyle">@style/Widget.SnackGo.BottomNavigationView</item>
+        <item name="textInputStyle">@style/Widget.SnackGo.TextInputLayout</item>
+        <item name="snackbarStyle">@style/Widget.SnackGo.Snackbar</item>
+    </style>
+</resources>

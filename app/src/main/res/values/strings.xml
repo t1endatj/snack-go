@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SnackGo</string>
+    <string name="app_tagline">Đặt món ăn vặt &amp; thức uống cực nhanh</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title_1">Khám phá món ngon mỗi ngày</string>
+    <string name="onboarding_desc_1">Hàng ngàn món ăn vặt và đồ uống hấp dẫn đang chờ đón bạn thưởng thức.</string>
+    <string name="onboarding_title_2">Đặt hàng chỉ với vài chạm</string>
+    <string name="onboarding_desc_2">Giao diện thông minh giúp bạn chọn món và thanh toán cực kỳ tiện lợi.</string>
+    <string name="onboarding_title_3">Giao nhanh, tiện lợi</string>
+    <string name="onboarding_desc_3">Đội ngũ giao hàng thần tốc giữ trọn vị ngon nóng hổi và tươi mới.</string>
+    <string name="label_skip">Bỏ qua</string>
+    <string name="label_start">Bắt đầu</string>
+    <string name="label_next">Tiếp tục</string>
+    <string name="label_onboarding_caption">Thưởng thức món ngon ngay hôm nay cùng SnackGo</string>
+
+    <!-- Login -->
+    <string name="title_login">Đăng nhập</string>
+    <string name="title_welcome_back">Chào mừng trở lại!</string>
+    <string name="subtitle_login">Nhập thông tin để tiếp tục trải nghiệm cùng SnackGo</string>
+    <string name="hint_email_or_phone">Email hoặc Số điện thoại</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="label_dont_have_account">Chưa có tài khoản?</string>
+    <string name="label_register_now">Đăng ký ngay</string>
+
+    <!-- Register -->
+    <string name="title_register">Tạo tài khoản mới</string>
+    <string name="subtitle_register">Đăng ký để trải nghiệm đặt món cực nhanh và tiện lợi</string>
+    <string name="hint_full_name">Họ và tên</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_phone">Số điện thoại</string>
+    <string name="hint_confirm_password">Nhập lại mật khẩu</string>
+    <string name="label_terms_agree">Tôi đồng ý với Điều khoản &amp; Chính sách của SnackGo</string>
+    <string name="label_already_have_account">Đã có tài khoản?</string>
+    <string name="label_login_now">Đăng nhập</string>
+    <string name="prefix_phone">+84 </string>
+
+    <!-- Validation & Auth Error Messages -->
+    <string name="error_empty_email_or_phone">Vui lòng nhập Email hoặc Số điện thoại</string>
+    <string name="error_empty_password">Vui lòng nhập mật khẩu</string>
+    <string name="error_invalid_credentials">Email/Số điện thoại hoặc mật khẩu không chính xác</string>
+    <string name="error_empty_full_name">Vui lòng nhập họ và tên</string>
+    <string name="error_empty_email">Vui lòng nhập Email</string>
+    <string name="error_invalid_email">Email không đúng định dạng</string>
+    <string name="error_empty_phone">Vui lòng nhập số điện thoại</string>
+    <string name="error_invalid_phone">Số điện thoại phải từ 9-10 chữ số</string>
+    <string name="error_password_length">Mật khẩu phải từ 6 ký tự trở lên</string>
+    <string name="error_empty_confirm_password">Vui lòng xác nhận mật khẩu</string>
+    <string name="error_password_mismatch">Mật khẩu xác nhận không trùng khớp</string>
+    <string name="error_email_exists">Email này đã được đăng ký</string>
+    <string name="error_phone_exists">Số điện thoại này đã được đăng ký</string>
+    <string name="error_terms_required">Bạn cần đồng ý với Điều khoản để tiếp tục</string>
+    <string name="msg_register_success">Đăng ký tài khoản thành công!</string>
+    <string name="error_product_not_found">Sản phẩm không tồn tại</string>
+    <string name="error_empty_address">Vui lòng nhập địa chỉ giao hàng</string>
+    <string name="error_short_address">Địa chỉ giao hàng quá ngắn (tối thiểu 5 ký tự)</string>
+    <string name="error_order_failed">Đặt hàng thất bại. Vui lòng thử lại!</string>
+    <string name="error_empty_old_password">Vui lòng nhập mật khẩu hiện tại</string>
+    <string name="error_incorrect_old_password">Mật khẩu hiện tại không chính xác</string>
+    <string name="error_new_password_same">Mật khẩu mới phải khác mật khẩu hiện tại</string>
+    <string name="error_admin_access_required">Chức năng chỉ dành cho Quản trị viên</string>
+
+    <!-- Navigation & Home UI -->
+    <string name="label_greeting_format">Xin chào, %s</string>
+    <string name="label_greeting_placeholder">Xin chào, Bạn</string>
+    <string name="label_deliver_to">Giao tới:</string>
+    <string name="label_no_address">Chưa có địa chỉ</string>
+    <string name="label_no_phone">Chưa có số điện thoại</string>
+    <string name="headline_home">Đặt món ngon, nhận nhanh</string>
+    <string name="hint_search">Tìm snack giòn, bánh tráng, trà sữa...</string>
+    <string name="category_all">Tất cả</string>
+    <string name="category_snack">Snack</string>
+    <string name="category_drink">Nước uống</string>
+    <string name="category_candy">Bánh kẹo</string>
+    <string name="title_collection">Bộ sưu tập</string>
+    <string name="badge_super_hot">Siêu hot</string>
+    <string name="label_see_all">Xem tất cả</string>
+    <string name="msg_empty_search">Không tìm thấy món phù hợp</string>
+    <string name="error_products_load_failed">Không thể tải danh sách món. Vui lòng thử lại.</string>
+    <string name="label_try_again">Thử lại</string>
+    <string name="label_clear_filter">Xóa bộ lọc</string>
+    <string name="label_view_cart">Xem giỏ</string>
+    <string name="label_view_cart_action">Xem giỏ</string>
+    <string name="label_coming_soon">Sắp có</string>
+    <string name="label_notifications">Thông báo</string>
+    <string name="label_mini_cart_format">Giỏ hàng • %d món</string>
+    <string name="label_added_to_cart">Đã thêm vào giỏ hàng</string>
+    <string name="label_confirm_logout">Bạn có chắc chắn muốn đăng xuất?</string>
+    <string name="label_sort_by_price">Sắp xếp theo giá</string>
+    <string name="label_sort_default">Mặc định</string>
+    <string name="label_sort_low_high">Giá từ thấp đến cao</string>
+    <string name="label_sort_high_low">Giá từ cao đến thấp</string>
+
+    <!-- Product Detail & Cart UI -->
+    <string name="label_product_detail">Chi tiết sản phẩm</string>
+    <string name="label_add_to_cart_detail">Thêm vào giỏ hàng</string>
+    <string name="label_discount_percent_format">-%d%%</string>
+    <string name="default_quantity">1</string>
+    <string name="label_cart_title">Giỏ hàng</string>
+    <string name="label_cart_items_count_format">Giỏ hàng (%d món)</string>
+    <string name="label_promo_code">Mã giảm giá</string>
+    <string name="label_apply">Áp dụng</string>
+    <string name="label_promo_applied">Đã áp dụng -10%</string>
+    <string name="label_promo_invalid">Mã giảm giá không hợp lệ</string>
+    <string name="label_subtotal">Tạm tính</string>
+    <string name="label_discount">Giảm giá</string>
+    <string name="label_free">Miễn phí</string>
+    <string name="label_checkout_button">Đặt hàng</string>
+    <string name="label_checkout_coming_soon">Thanh toán sắp có</string>
+    <string name="label_empty_cart_title">Giỏ hàng của bạn đang trống</string>
+    <string name="label_explore_snacks">Khám phá món ngon</string>
+    <string name="label_item_removed">Đã xóa khỏi giỏ hàng</string>
+    <string name="label_undo">Hoàn tác</string>
+
+    <!-- Checkout & Order Success UI -->
+    <string name="title_checkout">Thanh toán</string>
+    <string name="section_delivery_address">Địa chỉ giao hàng</string>
+    <string name="hint_receiver_name">Họ tên người nhận</string>
+    <string name="hint_delivery_address">Địa chỉ giao hàng chi tiết</string>
+    <string name="section_payment_method">Phương thức thanh toán</string>
+    <string name="payment_cash_title">Tiền mặt khi nhận hàng (COD)</string>
+    <string name="payment_bank_title">Chuyển khoản ngân hàng</string>
+    <string name="payment_wallet_title">Ví điện tử (Momo / ZaloPay)</string>
+    <string name="section_order_summary">Tóm tắt đơn hàng</string>
+    <string name="btn_confirm_order">Xác nhận đặt hàng</string>
+    <string name="title_order_success">Đặt hàng thành công!</string>
+    <string name="subtitle_order_success">Đơn hàng của bạn đã được ghi nhận và đang xử lý</string>
+    <string name="label_order_code_format">Mã đơn hàng: %s</string>
+    <string name="label_order_details_format">Tổng tiền: %1$s • %2$s</string>
+    <string name="label_estimated_delivery">Dự kiến giao hàng trong 15 - 30 phút</string>
+    <string name="btn_view_orders">Xem đơn hàng</string>
+    <string name="btn_go_home">Về trang chủ</string>
+    <string name="label_orders_count_format">Đã có %d đơn hàng</string>
+
+    <!-- Orders & Profile UI -->
+    <string name="label_my_orders">Đơn hàng của tôi</string>
+    <string name="title_order_detail">Chi tiết đơn hàng</string>
+    <string name="label_order_items_title">Danh sách món ăn</string>
+    <string name="label_order_items_count_format">%d món</string>
+    <string name="label_view_detail">Xem chi tiết</string>
+    <string name="label_other_items">món khác</string>
+    <string name="btn_cancel_order">Hủy đơn hàng</string>
+    <string name="btn_reorder">Mua lại</string>
+    <string name="btn_shop_now">Mua sắm ngay</string>
+    <string name="title_confirm_cancel_order">Hủy đơn hàng</string>
+    <string name="msg_confirm_cancel_order">Bạn có chắc chắn muốn hủy đơn hàng này?</string>
+    <string name="msg_order_cancelled_success">Đã hủy đơn hàng thành công</string>
+    <string name="msg_reorder_success">Đã thêm món vào giỏ hàng</string>
+    <string name="label_edit_profile">Thông tin cá nhân</string>
+    <string name="label_save_changes">Lưu thay đổi</string>
+    <string name="msg_profile_update_success">Cập nhật thông tin thành công!</string>
+    <string name="label_change_password">Đổi mật khẩu</string>
+    <string name="hint_old_password">Mật khẩu hiện tại</string>
+    <string name="hint_new_password">Mật khẩu mới</string>
+    <string name="hint_confirm_new_password">Nhập lại mật khẩu mới</string>
+    <string name="btn_update_password">Cập nhật mật khẩu</string>
+    <string name="msg_password_change_success">Đổi mật khẩu thành công!</string>
+    <string name="label_view_onboarding">Xem lại giới thiệu</string>
+    <string name="label_admin_product_management">Quản lý sản phẩm</string>
+    <string name="msg_avatar_updated">Cập nhật ảnh đại diện thành công!</string>
+    <string name="label_select_avatar">Chọn ảnh đại diện</string>
+
+    <!-- Admin Product CRUD & Multi-Image -->
+    <string name="title_admin_product_list">Quản lý sản phẩm</string>
+    <string name="title_add_product">Thêm sản phẩm</string>
+    <string name="title_edit_product">Sửa sản phẩm</string>
+    <string name="btn_add_product">Thêm sản phẩm</string>
+    <string name="btn_pick_image">Chọn ảnh (tối đa 6 ảnh)</string>
+    <string name="label_remove_image">Xóa ảnh</string>
+    <string name="label_cover_image">Ảnh bìa</string>
+    <string name="btn_save_product">Lưu sản phẩm</string>
+    <string name="hint_product_name">Tên sản phẩm</string>
+    <string name="hint_product_price">Giá bán</string>
+    <string name="hint_original_price">Giá gốc (không bắt buộc)</string>
+    <string name="hint_product_category">Danh mục sản phẩm</string>
+    <string name="hint_product_description">Mô tả sản phẩm</string>
+    <string name="hint_product_tag">Nhãn (Ví dụ: Bán chạy, Siêu hot)</string>
+    <string name="category_snack_label">Snack</string>
+    <string name="category_drink_label">Nước uống</string>
+    <string name="category_candy_label">Bánh kẹo</string>
+    <string name="suffix_currency">đ</string>
+    <string name="msg_empty_admin_products">Chưa có sản phẩm nào</string>
+    <string name="msg_product_added">Đã thêm sản phẩm thành công!</string>
+    <string name="msg_product_updated">Đã cập nhật sản phẩm thành công!</string>
+    <string name="msg_product_deleted">Đã xóa sản phẩm</string>
+    <string name="title_confirm_delete_product">Xóa sản phẩm</string>
+    <string name="msg_confirm_delete_product">Xóa sản phẩm này? Sản phẩm sẽ bị ẩn khỏi cửa hàng và giỏ hàng.</string>
+    <string name="error_empty_product_name">Vui lòng nhập tên sản phẩm</string>
+    <string name="error_long_product_name">Tên sản phẩm tối đa 100 ký tự</string>
+    <string name="error_empty_product_price">Vui lòng nhập giá bán</string>
+    <string name="error_invalid_product_price">Giá bán không hợp lệ</string>
+    <string name="error_orig_price_less">Giá gốc phải lớn hơn hoặc bằng giá bán</string>
+    <string name="error_empty_product_category">Vui lòng chọn danh mục sản phẩm</string>
+    <string name="error_long_product_desc">Mô tả tối đa 1000 ký tự</string>
+    <string name="error_long_product_tag">Nhãn tối đa 30 ký tự</string>
+
+    <!-- Navigation & Common Labels -->
+    <string name="label_home">Trang chủ</string>
+    <string name="label_categories">Danh mục</string>
+    <string name="label_cart">Giỏ hàng</string>
+    <string name="label_orders">Đơn hàng</string>
+    <string name="label_profile">Cá nhân</string>
+    <string name="label_logout">Đăng xuất</string>
+    <string name="label_search">Tìm kiếm đồ ăn, thức uống...</string>
+    <string name="label_add_to_cart">Thêm vào giỏ hàng</string>
+    <string name="label_buy_now">Mua ngay</string>
+    <string name="label_checkout">Thanh toán</string>
+    <string name="label_total">Tổng tiền</string>
+    <string name="label_delivery_fee">Phí vận chuyển</string>
+    <string name="label_quantity">Số lượng</string>
+    <string name="label_note">Ghi chú</string>
+    <string name="label_confirm">Xác nhận</string>
+    <string name="label_cancel">Hủy</string>
+    <string name="label_save">Lưu</string>
+    <string name="label_empty_cart">Giỏ hàng của bạn đang trống</string>
+    <string name="label_empty_orders">Bạn chưa có đơn hàng nào</string>
+
+    <!-- Order Statuses -->
+    <string name="label_order_status_pending">Chờ xác nhận</string>
+    <string name="label_order_status_shipping">Đang giao</string>
+    <string name="label_order_status_completed">Hoàn thành</string>
+    <string name="label_order_status_cancelled">Đã hủy</string>
+
+    <!-- Product Detail Rich Info & Commitments -->
+    <string name="label_delivery_time_15m">15 phút</string>
+    <string name="label_sold_count_format">Đã bán %d</string>
+    <string name="label_sold_count_k_format">Đã bán %.1fk</string>
+    <string name="label_product_spec_title">Thông tin chi tiết</string>
+    <string name="label_origin">Xuất xứ</string>
+    <string name="label_made_in">Sản xuất tại</string>
+    <string name="label_size_info">Quy cách</string>
+    <string name="label_ingredients">Thành phần</string>
+    <string name="label_features">Đặc tính</string>
+    <string name="label_usage_guide">Hướng dẫn sử dụng</string>
+    <string name="label_storage_guide">Hướng dẫn bảo quản</string>
+    <string name="label_shelf_life">Hạn sử dụng</string>
+    <string name="label_see_more">Xem thêm</string>
+    <string name="label_collapse">Thu gọn</string>
+    <string name="label_commitment_title">Cam kết từ SnackGo</string>
+    <string name="commitment_fast_delivery">Giao nhanh 15 phút</string>
+    <string name="commitment_fresh_daily">Tươi mới mỗi ngày</string>
+    <string name="commitment_easy_return">Đổi trả dễ dàng</string>
+    <string name="label_you_may_also_like">Có thể bạn cũng thích</string>
+    <string name="label_add_with_price">Thêm • %s</string>
+</resources>

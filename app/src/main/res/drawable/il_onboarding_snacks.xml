@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="220dp"
+    android:height="220dp"
+    android:viewportWidth="220"
+    android:viewportHeight="220">
+
+    <!-- Soft Background Sparkles & Bubbles -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M35,45 A10,10 0 1,1 35,44.9 Z M185,55 A8,8 0 1,1 185,54.9 Z M195,135 A12,12 0 1,1 195,134.9 Z M25,140 A6,6 0 1,1 25,139.9 Z" />
+
+    <!-- Golden Stars / Sparkles -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M45,25 L48,35 L58,38 L48,41 L45,51 L42,41 L32,38 L42,35 Z" />
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M175,28 L177,35 L184,37 L177,39 L175,46 L173,39 L166,37 L173,35 Z" />
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M190,95 L192,101 L198,103 L192,105 L190,111 L188,105 L182,103 L188,101 Z" />
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M30,95 L32,100 L37,101 L32,102 L30,107 L28,102 L23,101 L28,100 Z" />
+
+    <!-- Soft Ground Shadow -->
+    <path
+        android:fillColor="#26000000"
+        android:pathData="M30,192 C60,186 160,186 190,192 C160,198 60,198 30,192 Z" />
+
+    <!-- Soda Drink Cup (Right side) -->
+    <group
+        android:pivotX="145"
+        android:pivotY="140"
+        android:rotation="8">
+        <!-- Cup Body -->
+        <path
+            android:fillColor="#E53935"
+            android:pathData="M125,95 L165,95 L158,175 L132,175 Z" />
+        <!-- Cup Stripe -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M127,125 L163,125 L161,145 L129,145 Z" />
+        <!-- Cup Lid -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M122,88 L168,88 L166,95 L124,95 Z" />
+        <!-- Straw -->
+        <path
+            android:fillColor="#FFB300"
+            android:pathData="M142,55 L148,55 L146,88 L140,88 Z" />
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M142,55 L130,42 L136,38 L148,55 Z" />
+        <!-- Ice / Soda Logo Icon on Cup -->
+        <path
+            android:fillColor="#E53935"
+            android:pathData="M140,130 A5,5 0 1,1 140,129.9 Z M150,135 A4,4 0 1,1 150,134.9 Z" />
+    </group>
+
+    <!-- Main Snack Bag (Left & Center) -->
+    <group
+        android:pivotX="85"
+        android:pivotY="135"
+        android:rotation="-6">
+        <!-- Bag Body -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M48,70 L122,70 L115,180 L55,180 Z" />
+        <!-- Top Crimped Edge -->
+        <path
+            android:fillColor="#E65100"
+            android:pathData="M44,62 L126,62 L122,70 L48,70 Z" />
+        <!-- Bottom Seal -->
+        <path
+            android:fillColor="#E65100"
+            android:pathData="M54,180 L116,180 L114,186 L56,186 Z" />
+        <!-- Bag Front Curve / Shine -->
+        <path
+            android:fillColor="#FFA726"
+            android:pathData="M55,70 C70,100 70,150 62,180 L108,180 C116,150 116,100 115,70 Z" />
+        <!-- Center Emblem White Oval -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M85,95 C102,95 112,105 112,118 C112,131 102,141 85,141 C68,141 58,131 58,118 C58,105 68,95 85,95 Z" />
+        <!-- Star inside Emblem -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M85,103 L89,113 L99,114 L91,121 L93,131 L85,125 L77,131 L79,121 L71,114 L81,113 Z" />
+        <!-- Text line badge -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M70,147 H100 V152 H70 Z" />
+    </group>
+
+    <!-- Crispy Potato Chips Bursting out -->
+    <!-- Chip 1 (Top Left) -->
+    <path
+        android:fillColor="#FFCA28"
+        android:pathData="M45,45 C55,38 72,42 70,55 C68,68 50,65 42,58 C38,54 40,48 45,45 Z" />
+    <path
+        android:fillColor="#FFA000"
+        android:pathData="M48,48 C55,44 65,47 64,55 C58,58 50,56 46,52 Z" />
+
+    <!-- Chip 2 (Top Center) -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M85,32 C98,26 112,34 110,48 C108,58 92,62 82,52 C78,46 80,36 85,32 Z" />
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M88,36 C96,32 106,37 104,46 C96,49 90,47 86,42 Z" />
+
+    <!-- Cute Chocolate Cookie / Sweet Treat (Front Bottom Left) -->
+    <path
+        android:fillColor="#6D4C41"
+        android:pathData="M35,160 C46,160 55,169 55,180 C55,191 46,200 35,200 C24,200 15,191 15,180 C15,169 24,160 35,160 Z" />
+    <!-- Choco Chips on Cookie -->
+    <path
+        android:fillColor="#3E2723"
+        android:pathData="M26,172 A3,3 0 1,1 26,171.9 Z M42,170 A3,3 0 1,1 42,169.9 Z M33,185 A3.5,3.5 0 1,1 33,184.9 Z M24,188 A2.5,2.5 0 1,1 24,187.9 Z M44,186 A2.5,2.5 0 1,1 44,185.9 Z" />
+
+</vector>

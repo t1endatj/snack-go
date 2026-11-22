@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingVertical="6dp">
+
+    <com.linh.snackgo.view.widget.BlendImageView
+        android:id="@+id/ivCheckoutThumb"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:blendCardBackgroundColor="@color/promo_input_bg"
+        app:blendCornerRadius="10dp"
+        app:blendPaddingRatio="0.08" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCheckoutItemName"
+            style="@style/TextAppearance.SnackGo.Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="@color/primary_ink"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvCheckoutItemQty"
+            style="@style/TextAppearance.SnackGo.Body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/secondary_text"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCheckoutItemTotal"
+        style="@style/TextAppearance.SnackGo.Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/primary_ink"
+        android:textSize="13sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

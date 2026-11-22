@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="220dp"
+    android:height="220dp"
+    android:viewportWidth="220"
+    android:viewportHeight="220">
+
+    <!-- Sparkles -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M40,40 L44,48 L52,52 L44,56 L40,64 L36,56 L28,52 L36,48 Z" />
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M175,30 L178,36 L184,39 L178,42 L175,48 L172,42 L166,39 L172,36 Z" />
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M185,110 L188,116 L194,119 L188,122 L185,128 L182,122 L176,119 L182,116 Z" />
+
+    <!-- Main Snack Bag Outer Shape -->
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M60,40 H160 L150,180 H70 Z" />
+
+    <!-- Bag Top Crimped Edge -->
+    <path
+        android:fillColor="#1C1B1F"
+        android:pathData="M55,35 H165 V45 H55 Z" />
+
+    <!-- Bag Front Badge -->
+    <path
+        android:fillColor="#FAF8F5"
+        android:pathData="M80,80 H140 V140 H80 Z" />
+
+    <!-- Snack Emblem Star inside Badge -->
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M110,92 L115,107 L130,107 L118,117 L122,132 L110,122 L98,132 L102,117 L90,107 L105,107 Z" />
+</vector>

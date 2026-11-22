@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand Palette -->
+    <color name="primary_ink">#1C1B1F</color>
+    <color name="accent_orange">#FF8A00</color>
+    <color name="amber">#FFB300</color>
+    <color name="red">#E53935</color>
+    <color name="green_completed">#2E7D32</color>
+    <color name="background">#FAF8F5</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="secondary_text">#6B6B6B</color>
+    <color name="text_secondary">#6B6B6B</color>
+    <color name="divider">#EEEBE6</color>
+    <color name="hint_grey">#9E9E9E</color>
+    <color name="on_ink_secondary">#D6D2CE</color>
+    <color name="promo_input_bg">#F3F1EE</color>
+    <color name="avatar_bg">#F1EFEC</color>
+    <color name="avatar_tint">#B8B2AA</color>
+
+    <!-- Status Chip Contrast Text Colors -->
+    <color name="status_pending_text">#B26A00</color>
+    <color name="status_delivering_text">#1565C0</color>
+    <color name="status_completed_text">#1B7F3B</color>
+    <color name="status_cancelled_text">#B3261E</color>
+
+    <!-- Bottom Nav & Indicators -->
+    <color name="indicator_light_orange">#FFE9D2</color>
+
+    <!-- Pastel Card Backgrounds -->
+    <color name="pastel_peach">#FFE9E4</color>
+    <color name="pastel_yellow">#FFF8CC</color>
+    <color name="pastel_blue">#E8F3FF</color>
+    <color name="pastel_pink">#FFE8F1</color>
+
+    <!-- Product detail hero backgrounds -->
+    <color name="hero_drink_background">#FFF0F3</color>
+    <color name="hero_candy_background">#FFFDF0</color>
+    <color name="hero_snack_background">#FFF5EB</color>
+</resources>

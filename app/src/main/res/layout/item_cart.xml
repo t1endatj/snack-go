@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardCartItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="6dp"
+    app:cardBackgroundColor="@color/surface"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="2dp"
+    app:strokeWidth="0dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp">
+
+        <!-- Product Thumbnail with BlendImageView on Light Pastel Background -->
+        <com.linh.snackgo.view.widget.BlendImageView
+            android:id="@+id/ivCartThumb"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            app:blendCardBackgroundColor="@color/promo_input_bg"
+            app:blendCornerRadius="16dp"
+            app:blendPaddingRatio="0.08" />
+
+        <!-- Product Info & Trash Icon Top End -->
+        <LinearLayout
+            android:id="@+id/layoutInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_toEndOf="@id/ivCartThumb"
+            android:layout_toStartOf="@id/btnRemove"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCartProductName"
+                style="@style/TextAppearance.SnackGo.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/tvCartUnitPrice"
+                style="@style/TextAppearance.SnackGo.Price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/red"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnRemove"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_alignTop="@id/layoutInfo"
+            android:layout_alignParentEnd="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_trash" />
+
+        <!-- Quantity Stepper Bottom End -->
+        <LinearLayout
+            android:id="@+id/layoutStepper"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_below="@id/layoutInfo"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/bg_chip_logo"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="4dp">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnMinus"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:icon="@drawable/ic_minus"
+                app:iconSize="16dp"
+                app:iconTint="@color/primary_ink" />
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                style="@style/TextAppearance.SnackGo.Title"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="14sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnPlus"
+                style="@style/Widget.Material3.Button.IconButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                app:icon="@drawable/ic_plus"
+                app:iconSize="16dp"
+                app:iconTint="@color/primary_ink" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</com.google.android.material.card.MaterialCardView>

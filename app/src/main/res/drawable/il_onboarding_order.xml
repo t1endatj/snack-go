@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="220dp"
+    android:height="220dp"
+    android:viewportWidth="220"
+    android:viewportHeight="220">
+
+    <!-- Ambient Sparkles -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M30,50 A10,10 0 1,1 30,49.9 Z M190,45 A8,8 0 1,1 190,44.9 Z M25,130 A6,6 0 1,1 25,129.9 Z" />
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M38,28 L40,35 L47,37 L40,39 L38,46 L36,39 L29,37 L36,35 Z" />
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M182,30 L184,37 L191,39 L184,41 L182,48 L180,41 L173,39 L180,37 Z" />
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M195,120 L197,125 L202,126 L197,127 L195,132 L193,127 L188,126 L193,125 Z" />
+
+    <!-- Soft Ground Shadow -->
+    <path
+        android:fillColor="#26000000"
+        android:pathData="M40,196 C70,190 150,190 180,196 C150,202 70,202 40,196 Z" />
+
+    <!-- Smartphone Body (Center) -->
+    <!-- Phone Outer Case (Dark Ink with 24dp rounded corners) -->
+    <path
+        android:fillColor="#1C1B1F"
+        android:pathData="M80,24 C68,24 60,32 60,44 L60,180 C60,192 68,200 80,200 L140,200 C152,200 160,192 160,180 L160,44 C160,32 152,24 140,24 Z" />
+
+    <!-- Phone Inner Screen (White with 18dp rounded corners) -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M80,29 C71,29 65,35 65,44 L65,180 C65,189 71,195 80,195 L140,195 C149,195 155,189 155,180 L155,44 C155,35 149,29 140,29 Z" />
+
+    <!-- Phone Speaker Notch -->
+    <path
+        android:fillColor="#1C1B1F"
+        android:pathData="M98,34 H122 V37 H98 Z" />
+
+    <!-- App Header Bar inside Phone -->
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M65,42 H155 V66 H65 Z" />
+    <!-- App Mini Logo Text Line -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M75,51 H105 V57 H75 Z" />
+
+    <!-- Shopping Basket / Cart inside Screen -->
+    <group
+        android:pivotX="110"
+        android:pivotY="115">
+        <!-- Basket Body (Orange) -->
+        <path
+            android:fillColor="#FF8A00"
+            android:pathData="M78,92 L142,92 L136,134 L84,134 Z" />
+        <!-- Basket Grid Lines (White) -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M80,102 H140 V105 H80 Z M83,116 H137 V119 H83 Z M96,92 H99 V134 H96 Z M110,92 H113 V134 H110 Z M121,92 H124 V134 H121 Z" />
+        <!-- Basket Handle (Ink) -->
+        <path
+            android:fillColor="#1C1B1F"
+            android:pathData="M92,92 C92,76 128,76 128,92 L124,92 C124,80 96,80 96,92 Z" />
+
+        <!-- Snacks bursting out of Basket -->
+        <!-- Chip Bag mini -->
+        <path
+            android:fillColor="#FFB300"
+            android:pathData="M88,72 L106,72 L103,94 L90,94 Z" />
+        <!-- Soda can mini -->
+        <path
+            android:fillColor="#E53935"
+            android:pathData="M112,68 L126,68 L124,93 L114,93 Z" />
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M112,78 H125 V82 H112 Z" />
+    </group>
+
+    <!-- Success Add-To-Cart Badge (Circle with Checkmark) -->
+    <path
+        android:fillColor="#2E7D32"
+        android:pathData="M142,65 A16,16 0 1,1 142,64.9 Z" />
+    <!-- White Checkmark -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M138,69 L132,63 L134,61 L138,65 L148,55 L150,57 Z" />
+
+    <!-- Touch Gesture Ripple Circle (Bottom Right) -->
+    <path
+        android:fillColor="#33FF8A00"
+        android:pathData="M155,160 A24,24 0 1,1 155,159.9 Z" />
+    <path
+        android:fillColor="#80FF8A00"
+        android:pathData="M155,160 A14,14 0 1,1 155,159.9 Z" />
+    <!-- Tapping Finger / Hand Pointer Icon -->
+    <path
+        android:fillColor="#FF8A00"
+        android:pathData="M145,150 L154,140 C156,138 160,138 162,141 C164,143 164,147 161,150 L156,155 L168,158 C172,159 174,163 173,167 L168,178 C166,183 160,186 155,185 L140,180 L134,166 L145,150 Z" />
+
+    <!-- Cute Floating Heart Tag (Top Left) -->
+    <path
+        android:fillColor="#E53935"
+        android:pathData="M38,82 C34,75 24,78 24,85 C24,93 38,103 38,103 C38,103 52,93 52,85 C52,78 42,75 38,82 Z" />
+
+</vector>

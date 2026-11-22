@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Shape Appearances -->
+    <style name="ShapeAppearance.SnackGo.Card" parent="ShapeAppearance.Material3.Corner.Medium">
+        <item name="cornerSize">24dp</item>
+    </style>
+
+    <style name="ShapeAppearance.SnackGo.FullRounded" parent="ShapeAppearance.Material3.Corner.Full">
+    </style>
+
+    <style name="ShapeAppearance.SnackGo.Circle" parent="ShapeAppearance.Material3.Corner.Full">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Component Widget Styles -->
+    <style name="Widget.SnackGo.CardView" parent="Widget.Material3.CardView.Filled">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.SnackGo.Card</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+        <item name="cardElevation">2dp</item>
+    </style>
+
+    <style name="Widget.SnackGo.Button" parent="Widget.Material3.Button">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.SnackGo.FullRounded</item>
+        <item name="backgroundTint">@color/primary_ink</item>
+        <item name="android:textColor">@color/surface</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:minHeight">54dp</item>
+    </style>
+
+    <style name="Widget.SnackGo.Chip" parent="Widget.Material3.Chip.Assist">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearance.SnackGo.FullRounded</item>
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipStrokeColor">@android:color/transparent</item>
+    </style>
+
+    <style name="Widget.SnackGo.BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:background">@color/surface</item>
+        <item name="elevation">8dp</item>
+    </style>
+
+    <style name="Widget.SnackGo.TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="hintTextAppearance">@style/TextAppearance.SnackGo.Body.Small</item>
+        <item name="helperTextTextAppearance">@style/TextAppearance.SnackGo.Body.Small</item>
+        <item name="errorTextAppearance">@style/TextAppearance.SnackGo.Body.Small</item>
+    </style>
+
+    <style name="Widget.SnackGo.Snackbar" parent="Widget.Material3.Snackbar">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <!-- Custom SnackGo Text Styles -->
+    <style name="TextAppearance.SnackGo.Headline" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_ink</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Title" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/primary_ink</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/secondary_text</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Button" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/surface</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Price" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/accent_orange</item>
+    </style>
+
+    <!-- Material 3 Standard Text Appearances Mapping to Poppins -->
+    <style name="TextAppearance.SnackGo.Display.Large" parent="TextAppearance.Material3.DisplayLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Display.Medium" parent="TextAppearance.Material3.DisplayMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Display.Small" parent="TextAppearance.Material3.DisplaySmall">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Headline.Large" parent="TextAppearance.Material3.HeadlineLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Headline.Medium" parent="TextAppearance.Material3.HeadlineMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Headline.Small" parent="TextAppearance.Material3.HeadlineSmall">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Title.Large" parent="TextAppearance.Material3.TitleLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Title.Medium" parent="TextAppearance.Material3.TitleMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Title.Small" parent="TextAppearance.Material3.TitleSmall">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Body.Large" parent="TextAppearance.Material3.BodyLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Body.Medium" parent="TextAppearance.Material3.BodyMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Body.Small" parent="TextAppearance.Material3.BodySmall">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+
+    <style name="TextAppearance.SnackGo.Label.Large" parent="TextAppearance.Material3.LabelLarge">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Label.Medium" parent="TextAppearance.Material3.LabelMedium">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+    <style name="TextAppearance.SnackGo.Label.Small" parent="TextAppearance.Material3.LabelSmall">
+        <item name="fontFamily">@font/poppins</item>
+        <item name="android:fontFamily">@font/poppins</item>
+    </style>
+</resources>

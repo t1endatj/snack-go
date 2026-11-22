@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_top_corners_sheet"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        style="@style/TextAppearance.SnackGo.Title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/label_sort_by_price"
+        android:textSize="18sp" />
+
+    <RadioGroup
+        android:id="@+id/rgSortOptions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <RadioButton
+            android:id="@+id/rbSortDefault"
+            style="@style/TextAppearance.SnackGo.Body"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/label_sort_default"
+            android:textColor="@color/primary_ink"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/rbSortLowHigh"
+            style="@style/TextAppearance.SnackGo.Body"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/label_sort_low_high"
+            android:textColor="@color/primary_ink"
+            android:textSize="15sp" />
+
+        <RadioButton
+            android:id="@+id/rbSortHighLow"
+            style="@style/TextAppearance.SnackGo.Body"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="@string/label_sort_high_low"
+            android:textColor="@color/primary_ink"
+            android:textSize="15sp" />
+
+    </RadioGroup>
+
+</LinearLayout>

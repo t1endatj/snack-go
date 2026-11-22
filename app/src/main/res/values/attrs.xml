@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BlendImageView">
+        <attr name="blendCardBackgroundColor" format="color" />
+        <attr name="blendCornerRadius" format="dimension" />
+        <attr name="blendPaddingRatio" format="float" />
+        <attr name="enableBlend" format="boolean" />
+    </declare-styleable>
+</resources>

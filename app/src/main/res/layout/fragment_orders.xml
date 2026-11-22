@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scrollViewOrders"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:paddingBottom="128dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- tiêu đề đơn hàng -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_top_header_gradient"
+                android:orientation="vertical"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="12dp">
+
+                <TextView
+                    android:id="@+id/tvOrdersTitle"
+                    style="@style/TextAppearance.SnackGo.Headline"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/label_my_orders"
+                    android:textSize="26sp" />
+
+            </LinearLayout>
+
+            <!-- chip lọc trạng thái có thể cuộn ngang -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:clipToPadding="false"
+                android:paddingHorizontal="16dp"
+                android:scrollbars="none">
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/chipGroupStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:singleLine="true"
+                    app:singleSelection="true">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipAllOrders"
+                        style="@style/Widget.SnackGo.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:checked="true"
+                        android:text="@string/category_all"
+                        android:textColor="@color/surface"
+                        app:chipBackgroundColor="@color/primary_ink"
+                        app:chipCornerRadius="20dp"
+                        app:chipStrokeWidth="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipPending"
+                        style="@style/Widget.SnackGo.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/label_order_status_pending"
+                        android:textColor="@color/primary_ink"
+                        app:chipBackgroundColor="@color/surface"
+                        app:chipCornerRadius="20dp"
+                        app:chipStrokeWidth="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipDelivering"
+                        style="@style/Widget.SnackGo.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/label_order_status_shipping"
+                        android:textColor="@color/primary_ink"
+                        app:chipBackgroundColor="@color/surface"
+                        app:chipCornerRadius="20dp"
+                        app:chipStrokeWidth="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCompleted"
+                        style="@style/Widget.SnackGo.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/label_order_status_completed"
+                        android:textColor="@color/primary_ink"
+                        app:chipBackgroundColor="@color/surface"
+                        app:chipCornerRadius="20dp"
+                        app:chipStrokeWidth="0dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chipCancelled"
+                        style="@style/Widget.SnackGo.Chip"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="@string/label_order_status_cancelled"
+                        android:textColor="@color/primary_ink"
+                        app:chipBackgroundColor="@color/surface"
+                        app:chipCornerRadius="20dp"
+                        app:chipStrokeWidth="0dp" />
+
+                </com.google.android.material.chip.ChipGroup>
+
+            </HorizontalScrollView>
+
+            <!-- danh sách đơn hàng -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false" />
+
+            <!-- trạng thái chưa có đơn hàng -->
+            <LinearLayout
+                android:id="@+id/layoutEmptyOrders"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="36dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_receipt"
+                    app:tint="@color/avatar_tint" />
+
+                <TextView
+                    style="@style/TextAppearance.SnackGo.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center"
+                    android:text="@string/label_empty_orders"
+                    android:textSize="18sp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnShopNow"
+                    style="@style/Widget.SnackGo.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:backgroundTint="@color/accent_orange"
+                    android:paddingHorizontal="24dp"
+                    android:text="@string/btn_shop_now"
+                    android:textColor="@color/surface" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
