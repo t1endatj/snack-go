@@ -6,7 +6,7 @@ public final class DbConstants {
     }
 
     public static final String DB_NAME = "snackgo.db";
-    public static final int DB_VERSION = 29;
+    public static final int DB_VERSION = 30;
 
     // Table Users: users(id PK, full_name, email UNIQUE, phone, password_hash, salt, address, avatar_path, role, created_at)
     public static final String TABLE_USERS = "users";

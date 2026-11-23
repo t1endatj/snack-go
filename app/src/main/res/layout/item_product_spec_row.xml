@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/tvSpecLabel"
             style="@style/TextAppearance.SnackGo.Body"
-            android:layout_width="110dp"
+            android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:textColor="@color/secondary_text"
             android:textSize="13sp" />
@@ -35,7 +35,7 @@
         style="@style/TextAppearance.SnackGo.Body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="120dp"
         android:layout_marginTop="4dp"
         android:text="@string/label_see_more"
         android:textColor="@color/accent_orange"

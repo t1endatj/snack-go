@@ -200,9 +200,13 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         binding.chipDelivery.setVisibility(View.VISIBLE);
 
-        if (product.getSizeInfo() != null && !product.getSizeInfo().trim().isEmpty()) {
+        String sizeInfo = product.getSizeInfo();
+        if (sizeInfo == null || sizeInfo.trim().isEmpty()) {
+            sizeInfo = extractSizeInfoFromDescription(product.getDescription());
+        }
+        if (sizeInfo != null && !sizeInfo.trim().isEmpty()) {
             binding.chipSize.setVisibility(View.VISIBLE);
-            binding.tvSizeValue.setText(product.getSizeInfo().trim());
+            binding.tvSizeValue.setText(sizeInfo.trim());
         } else {
             binding.chipSize.setVisibility(View.GONE);
         }
@@ -226,16 +230,25 @@ public class ProductDetailActivity extends AppCompatActivity {
             binding.tvDiscountBadge.setVisibility(View.GONE);
         }
 
-        // mô tả sản phẩm
-        String desc = product.getDescription() != null ? product.getDescription().trim() : "";
-        binding.tvDescription.setText(desc);
-        if (desc.length() > 90) {
-            binding.tvDescToggle.setVisibility(View.VISIBLE);
-            updateDescriptionExpanded(isDescExpanded);
+        // mô tả sản phẩm (chỉ hiển thị phần giới thiệu ngắn gọn, phần chi tiết thông số sẽ đưa vào bảng bên dưới)
+        String rawDesc = product.getDescription() != null ? product.getDescription().trim() : "";
+        String desc = extractCleanDescription(rawDesc);
+        if (!desc.isEmpty()) {
+            binding.labelDescription.setVisibility(View.VISIBLE);
+            binding.tvDescription.setVisibility(View.VISIBLE);
+            binding.tvDescription.setText(desc);
+            if (desc.length() > 90) {
+                binding.tvDescToggle.setVisibility(View.VISIBLE);
+                updateDescriptionExpanded(isDescExpanded);
+            } else {
+                binding.tvDescToggle.setVisibility(View.GONE);
+                binding.tvDescription.setMaxLines(Integer.MAX_VALUE);
+                binding.tvDescription.setEllipsize(null);
+            }
         } else {
+            binding.labelDescription.setVisibility(View.GONE);
+            binding.tvDescription.setVisibility(View.GONE);
             binding.tvDescToggle.setVisibility(View.GONE);
-            binding.tvDescription.setMaxLines(Integer.MAX_VALUE);
-            binding.tvDescription.setEllipsize(null);
         }
 
         // thông tin chi tiết
@@ -300,6 +313,97 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
+    private String extractCleanDescription(String rawDesc) {
+        if (rawDesc == null || rawDesc.trim().isEmpty()) {
+            return "";
+        }
+        int detailIndex = rawDesc.indexOf("Chi tiết sản phẩm:");
+        if (detailIndex != -1) {
+            return rawDesc.substring(0, detailIndex).trim();
+        }
+
+        String[] lines = rawDesc.split("\n");
+        StringBuilder sb = new StringBuilder();
+        for (String line : lines) {
+            String trimmed = line.trim();
+            if (trimmed.startsWith("•") || trimmed.startsWith("- ") || trimmed.startsWith("* ")) {
+                break;
+            }
+            if (sb.length() > 0) {
+                sb.append("\n");
+            }
+            sb.append(line);
+        }
+        return sb.toString().trim();
+    }
+
+    private String extractSizeInfoFromDescription(String desc) {
+        if (desc == null || desc.trim().isEmpty()) {
+            return null;
+        }
+        for (String rawLine : desc.split("\n")) {
+            String line = rawLine.trim();
+            if (line.startsWith("•") || line.startsWith("-") || line.startsWith("*")) {
+                String content = line.substring(1).trim();
+                int colonIndex = content.indexOf(":");
+                if (colonIndex != -1) {
+                    String label = content.substring(0, colonIndex).trim().toLowerCase();
+                    if (label.contains("trọng lượng") || label.contains("dung tích") || label.contains("quy cách")) {
+                        return content.substring(colonIndex + 1).trim();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private void parseSpecsFromDescription(List<SpecItem> specs) {
+        String desc = product.getDescription();
+        if (desc == null || desc.trim().isEmpty()) {
+            return;
+        }
+
+        String[] lines = desc.split("\n");
+        SpecItem currentSpec = null;
+
+        for (String rawLine : lines) {
+            String line = rawLine.trim();
+            if (line.isEmpty() || line.equalsIgnoreCase("Chi tiết sản phẩm:")) {
+                continue;
+            }
+
+            if (line.startsWith("•") || line.startsWith("-") || line.startsWith("*")) {
+                String content = line.substring(1).trim();
+                int colonIndex = content.indexOf(":");
+                if (colonIndex != -1) {
+                    String label = content.substring(0, colonIndex).trim();
+                    String value = content.substring(colonIndex + 1).trim();
+                    if (!label.isEmpty() && !value.isEmpty()) {
+                        boolean exists = false;
+                        for (SpecItem item : specs) {
+                            if (item.label.equalsIgnoreCase(label)) {
+                                exists = true;
+                                break;
+                            }
+                        }
+                        if (!exists) {
+                            currentSpec = new SpecItem(label, value);
+                            specs.add(currentSpec);
+                        } else {
+                            currentSpec = null;
+                        }
+                    } else {
+                        currentSpec = null;
+                    }
+                } else {
+                    currentSpec = null;
+                }
+            } else if (currentSpec != null) {
+                currentSpec.value = currentSpec.value + " " + line;
+            }
+        }
+    }
+
     private void setupSpecificationsCard() {
         binding.layoutSpecsContainer.removeAllViews();
         List<SpecItem> specs = new ArrayList<>();
@@ -312,6 +416,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         addSpecIfNotEmpty(specs, getString(R.string.label_usage_guide), product.getUsageGuide());
         addSpecIfNotEmpty(specs, getString(R.string.label_storage_guide), product.getStorageGuide());
         addSpecIfNotEmpty(specs, getString(R.string.label_shelf_life), product.getShelfLife());
+
+        // nếu các trường thông số chưa có sẵn trong DB, tự động trích xuất từ phần gạch đầu dòng mô tả
+        parseSpecsFromDescription(specs);
 
         if (specs.isEmpty()) {
             binding.cardProductSpecs.setVisibility(View.GONE);
@@ -363,7 +470,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private static class SpecItem {
         final String label;
-        final String value;
+        String value;
         SpecItem(String label, String value) {
             this.label = label;
             this.value = value;
