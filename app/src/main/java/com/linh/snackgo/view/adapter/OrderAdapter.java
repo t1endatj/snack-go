@@ -96,21 +96,8 @@ public class OrderAdapter extends ListAdapter<OrderSummary, OrderAdapter.OrderVi
             binding.tvOrderItemCount.setText(itemView.getContext().getString(R.string.label_mini_cart_format, totalQty));
             binding.tvOrderTotal.setText(PriceFormatter.formatPrice(order.getTotalAmount()));
 
-            // Thumbnail loading
-            String img = summary.getFirstItemImage();
-            if (img != null && img.startsWith("/")) {
-                File imgFile = new File(img);
-                if (imgFile.exists()) {
-                    Glide.with(itemView.getContext()).load(imgFile).into(binding.ivOrderFirstThumb);
-                } else {
-                    binding.ivOrderFirstThumb.setImageResource(R.drawable.ic_placeholder_product);
-                }
-            } else if (img != null && !img.isEmpty()) {
-                int resId = ImageUtils.getDrawableResId(itemView.getContext(), img);
-                binding.ivOrderFirstThumb.setImageResource(resId);
-            } else {
-                binding.ivOrderFirstThumb.setImageResource(R.drawable.ic_placeholder_product);
-            }
+            // Thumbnail loading using ImageUtils (supports asset, file path, and drawable)
+            ImageUtils.loadProductImage(itemView.getContext(), summary.getFirstItemImage(), binding.ivOrderFirstThumb, 60);
 
             View.OnClickListener clickListener = v -> {
                 if (listener != null) {

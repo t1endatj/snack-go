@@ -59,6 +59,7 @@
 ### Recent Fixes & Improvements
 - **Product Detail Specifications**: Implemented smart extraction of structured specifications (`• [Tên]: [Giá trị]`) into the Material Card Key-Value Table (`cardProductSpecs`), keeping the general description clean and readable.
 - **Category Filter Correction**: Corrected category of "Bánh Pâté Chaud nhân thịt" from `snack` to `candy` (`AppConstants.CATEGORY_CANDY`) in seed data and database migration v30, ensuring it displays under "Bánh kẹo" rather than "Snack".
+- **Order Thumbnail Image Mapping**: Corrected `OrderDao` to use `product.getCoverImage()` and updated `OrderAdapter` to load thumbnails via `ImageUtils.loadProductImage()`, resolving image mismatch in order history and synchronizing `snack_que_dorkbua.jpg`.
 
 ---
 
