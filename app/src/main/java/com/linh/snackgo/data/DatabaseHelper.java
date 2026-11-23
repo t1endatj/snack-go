@@ -310,7 +310,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         seedProduct(db, "Nước uống Kirin iMUSE sữa chua & chanh", SEED_KIRIN_DESCRIPTION, AppConstants.CATEGORY_DRINK, 15000L, 18000L, "Giải nhiệt", "drink_kirin_imuse");
         seedProduct(db, "Sữa chua uống Vinamilk Probi hương dứa", SEED_PROBI_DESCRIPTION, AppConstants.CATEGORY_DRINK, 26000L, 30000L, "Bán chạy", "drink_probi_dua");
         seedProduct(db, "Bánh su kem phô mai GO!", SEED_SU_KEM_DESCRIPTION, AppConstants.CATEGORY_CANDY, 35000L, 40000L, "Thượng hạng", "candy_banh_su_kem_pho_mai");
-        seedProduct(db, "Bánh Pâté Chaud nhân thịt", SEED_PATE_CHAUD_DESCRIPTION, AppConstants.CATEGORY_SNACK, 18000L, 22000L, "Nóng hổi", "snack_pate_chaud");
+        seedProduct(db, "Bánh Pâté Chaud nhân thịt", SEED_PATE_CHAUD_DESCRIPTION, AppConstants.CATEGORY_CANDY, 18000L, 22000L, "Nóng hổi", "snack_pate_chaud");
         seedProduct(db, "Bánh Custas Tiramisu Orion", SEED_CUSTAS_TIRAMISU_DESCRIPTION, AppConstants.CATEGORY_CANDY, 56000L, 62000L, "Siêu hot", "candy_custas_tiramisu");
         seedProduct(db, "Snack bánh que Dorkbua Lotus", SEED_DORKBUA_DESCRIPTION, AppConstants.CATEGORY_SNACK, 22000L, 26000L, "Snack giòn", "snack_que_dorkbua");
         seedProduct(db, "Snack Toonies vị gà rán Orion", SEED_TOONIES_DESCRIPTION, AppConstants.CATEGORY_SNACK, 12000L, 15000L, "Bán chạy", "snack_toonies_ga_ran");
@@ -450,6 +450,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             addColumnIfNotExists(db, DbConstants.TABLE_PRODUCTS, DbConstants.COLUMN_PRODUCT_SHELF_LIFE, "TEXT");
             addColumnIfNotExists(db, DbConstants.TABLE_PRODUCTS, DbConstants.COLUMN_PRODUCT_RATING, "REAL DEFAULT 0");
             addColumnIfNotExists(db, DbConstants.TABLE_PRODUCTS, DbConstants.COLUMN_PRODUCT_SOLD_COUNT, "INTEGER DEFAULT 0");
+        }
+
+        // Incremental migration for version 30: Chuyển Bánh Pâté Chaud sang đúng danh mục Bánh kẹo (CATEGORY_CANDY)
+        if (oldVersion < 30) {
+            ContentValues cv = new ContentValues();
+            cv.put(DbConstants.COLUMN_PRODUCT_CATEGORY, AppConstants.CATEGORY_CANDY);
+            db.update(DbConstants.TABLE_PRODUCTS, cv, DbConstants.COLUMN_PRODUCT_NAME + " LIKE ?", new String[]{"%Pâté Chaud%"});
         }
     }
 
