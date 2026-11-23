@@ -132,8 +132,8 @@ public class OrderDao {
                 firstQty = first.getQuantity();
 
                 Product product = productDao.getById(first.getProductId());
-                if (product != null && product.getImage() != null) {
-                    firstImage = product.getImage();
+                if (product != null) {
+                    firstImage = product.getCoverImage();
                 }
             }
 
