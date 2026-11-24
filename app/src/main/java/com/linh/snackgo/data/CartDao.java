@@ -10,14 +10,17 @@ import com.linh.snackgo.model.CartItem;
 import com.linh.snackgo.model.Product;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Data Access Object for Cart entities.
  */
 public class CartDao {
     private final DatabaseHelper dbHelper;
+    private final Context context;
 
     public CartDao(Context context) {
+        this.context = context.getApplicationContext();
         this.dbHelper = DatabaseHelper.getInstance(context);
     }
 
@@ -128,7 +131,23 @@ public class CartDao {
                 } while (cursor.moveToNext());
             }
         }
+        attachImagesToCartProducts(list);
         return list;
+    }
+
+    private void attachImagesToCartProducts(List<CartItem> cartItems) {
+        if (cartItems == null || cartItems.isEmpty()) return;
+        ProductImageDao productImageDao = new ProductImageDao(context);
+        Map<Long, List<String>> map = productImageDao.getAllImagesGroupedByProduct();
+        for (CartItem item : cartItems) {
+            Product p = item.getProduct();
+            if (p != null) {
+                List<String> imgList = map.get(p.getId());
+                if (imgList != null && !imgList.isEmpty()) {
+                    p.setImages(imgList);
+                }
+            }
+        }
     }
 
     public int getTotalCount(long userId) {
