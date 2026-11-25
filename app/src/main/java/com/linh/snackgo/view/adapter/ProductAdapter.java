@@ -37,6 +37,7 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ProductV
     public interface OnProductClickListener {
         void onProductClick(Product product);
         void onAddToCartClick(Product product, View addBtn);
+        default void onFavoriteToggled(Product product, boolean isFavorite) {}
     }
 
     public ProductAdapter(OnProductClickListener listener) {
@@ -128,6 +129,9 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ProductV
             binding.btnFavorite.setOnClickListener(v -> {
                 boolean newFav = favoriteManager.toggleFavorite(userId, product.getId());
                 binding.btnFavorite.setImageResource(newFav ? R.drawable.ic_heart_filled : R.drawable.ic_heart);
+                if (listener != null) {
+                    listener.onFavoriteToggled(product, newFav);
+                }
             });
 
             // tải ảnh bìa bằng BlendImageView trên nền pastel của card
