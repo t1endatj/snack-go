@@ -6,27 +6,27 @@ import com.linh.snackgo.constants.AppConstants;
 import com.linh.snackgo.data.CartDao;
 import com.linh.snackgo.data.OrderDao;
 import com.linh.snackgo.data.ProductDao;
-import com.linh.snackgo.data.UserDao;
 import com.linh.snackgo.model.CartItem;
 import com.linh.snackgo.model.CartSummary;
 import com.linh.snackgo.model.Order;
 import com.linh.snackgo.model.OrderItem;
 import com.linh.snackgo.model.OrderSummary;
 import com.linh.snackgo.model.Product;
-import com.linh.snackgo.model.User;
 import com.linh.snackgo.utils.NameUtils;
 import com.linh.snackgo.utils.SessionManager;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
- * Controller handling Order placement, business validation, status updates, and reorder execution.
+ * xử lý đặt hàng, hủy đơn và mua lại.
  */
 public class OrderController {
     private final Context context;
     private final OrderDao orderDao;
     private final CartDao cartDao;
-    private final UserDao userDao;
     private final CartController cartController;
     private final SessionManager sessionManager;
 
@@ -34,7 +34,6 @@ public class OrderController {
         this.context = context.getApplicationContext();
         this.orderDao = new OrderDao(context);
         this.cartDao = new CartDao(context);
-        this.userDao = new UserDao(context);
         this.cartController = new CartController(context);
         this.sessionManager = new SessionManager(context);
     }
@@ -97,119 +96,100 @@ public class OrderController {
     }
 
     public OrderResult placeOrder(long userId, String receiverName, String phone, String address,
-                                   String paymentMethod, boolean promoApplied) {
-        return placeOrder(userId, receiverName, phone, address, paymentMethod, promoApplied, null);
+                                   String paymentMethod, boolean promoApplied, List<Long> selectedProductIds) {
+        if (!sessionManager.isCurrentUser(userId)) return error(R.string.error_invalid_credentials, 0);
+        OrderResult validation = validateDelivery(receiverName, phone, address, paymentMethod);
+        if (validation != null) return validation;
+        List<CartItem> items = getSelectedItems(userId, selectedProductIds);
+        if (items.isEmpty()) return error(R.string.label_empty_cart_title, 0);
+        if (selectedProductIds != null && new HashSet<>(selectedProductIds).size() != items.size()) {
+            return error(R.string.error_order_failed, 0);
+        }
+        CartSummary summary = cartController.computeSummary(items, promoApplied);
+        Order order = buildOrder(userId, phone.trim(), address, paymentMethod, summary);
+        if (!orderDao.createOrder(order, snapshotItems(items))) return error(R.string.error_order_failed, 0);
+        return OrderResult.success(order.getId(), order.getOrderCode(), summary.getTotal(), paymentMethod);
     }
 
-    public OrderResult placeOrder(long userId, String receiverName, String phone, String address,
-                                   String paymentMethod, boolean promoApplied, List<Long> selectedProductIds) {
-        // 1. Validations
+    private OrderResult error(int messageId, int fieldId) {
+        return OrderResult.error(context.getString(messageId), fieldId);
+    }
+
+    private OrderResult validateDelivery(String receiverName, String phone, String address, String paymentMethod) {
         if (receiverName == null || receiverName.trim().isEmpty()) {
-            return OrderResult.error(context.getString(R.string.error_empty_full_name), R.id.etReceiverName);
+            return error(R.string.error_empty_full_name, R.id.etReceiverName);
         }
 
         if (phone == null || phone.trim().isEmpty()) {
-            return OrderResult.error(context.getString(R.string.error_empty_phone), R.id.etPhone);
+            return error(R.string.error_empty_phone, R.id.etPhone);
         }
 
-        String cleanPhone = phone.trim();
-        if (!cleanPhone.matches(AppConstants.PHONE_REGEX)) {
-            return OrderResult.error(context.getString(R.string.error_invalid_phone), R.id.etPhone);
+        if (!phone.trim().matches(AppConstants.PHONE_REGEX)) {
+            return error(R.string.error_invalid_phone, R.id.etPhone);
         }
 
         if (address == null || address.trim().isEmpty()) {
-            return OrderResult.error(context.getString(R.string.error_empty_address), R.id.etAddress);
+            return error(R.string.error_empty_address, R.id.etAddress);
         }
 
-        String cleanAddress = NameUtils.normalizeAddress(address);
-        if (cleanAddress.length() < AppConstants.MIN_ADDRESS_LENGTH) {
-            return OrderResult.error(context.getString(R.string.error_short_address), R.id.etAddress);
+        if (NameUtils.normalizeAddress(address).length() < AppConstants.MIN_ADDRESS_LENGTH) {
+            return error(R.string.error_short_address, R.id.etAddress);
         }
 
-        if (paymentMethod == null || paymentMethod.isEmpty()) {
-            return OrderResult.error(context.getString(R.string.error_order_failed), 0);
+        if (!AppConstants.PAYMENT_CASH.equals(paymentMethod) && !AppConstants.PAYMENT_BANK.equals(paymentMethod)
+                && !AppConstants.PAYMENT_EWALLET.equals(paymentMethod)) {
+            return error(R.string.error_order_failed, 0);
         }
+        return null;
+    }
 
-        // 2. Re-query cart items from DB (Never trust UI passed items) and filter by selected IDs
-        List<CartItem> allCartItems = cartDao.getItems(userId);
+    private List<CartItem> getSelectedItems(long userId, List<Long> selectedProductIds) {
+        Set<Long> selected = selectedProductIds == null ? null : new HashSet<>(selectedProductIds);
         List<CartItem> cartItems = new ArrayList<>();
-        if (allCartItems != null) {
-            for (CartItem item : allCartItems) {
-                if (selectedProductIds == null || selectedProductIds.contains(item.getProductId())) {
-                    cartItems.add(item);
-                }
-            }
+        for (CartItem item : cartDao.getItems(userId)) {
+            if (selected == null || selected.contains(item.getProductId())) cartItems.add(item);
         }
-        if (cartItems.isEmpty()) {
-            return OrderResult.error(context.getString(R.string.label_empty_cart_title), 0);
-        }
+        return cartItems;
+    }
 
-        // 3. Recompute summary from DB
-        CartSummary summary = cartController.computeSummary(cartItems, promoApplied);
-
-        // 4. Build Order & Snapshot OrderItems
-        String orderCode = orderDao.generateOrderCode();
+    private Order buildOrder(long userId, String phone, String address, String paymentMethod, CartSummary summary) {
         Order order = new Order();
         order.setUserId(userId);
-        order.setOrderCode(orderCode);
         order.setTotalAmount(summary.getTotal());
         order.setDiscountAmount(summary.getDiscount());
         order.setDeliveryFee(summary.getDeliveryFee());
         order.setPaymentMethod(paymentMethod);
-        order.setDeliveryAddress(cleanAddress);
-        order.setPhone(cleanPhone);
+        order.setDeliveryAddress(NameUtils.normalizeAddress(address));
+        order.setPhone(phone);
         order.setStatus(AppConstants.ORDER_STATUS_PENDING);
-
-        List<OrderItem> orderItems = new ArrayList<>();
-        for (CartItem cartItem : cartItems) {
-            if (cartItem.getProduct() != null) {
-                OrderItem item = new OrderItem(
-                        cartItem.getProductId(),
-                        cartItem.getProduct().getName(),
-                        cartItem.getProduct().getPrice(),
-                        cartItem.getQuantity()
-                );
-                orderItems.add(item);
-            }
-        }
-
-        // 5. Atomic DB Transaction (Insert Order, Insert OrderItems, Delete Cart)
-        boolean dbSuccess = orderDao.createOrder(order, orderItems);
-        if (!dbSuccess) {
-            return OrderResult.error(context.getString(R.string.error_order_failed), 0);
-        }
-
-        // 6. Update user profile address if empty or updated
-        User user = userDao.getById(userId);
-        if (user != null) {
-            userDao.update(userId, receiverName.trim(), cleanPhone, cleanAddress, user.getAvatarPath());
-            sessionManager.updateUserProfile(receiverName.trim(), cleanPhone, cleanAddress);
-        }
-
-        return OrderResult.success(order.getId(), orderCode, summary.getTotal(), paymentMethod);
+        return order;
     }
 
-    public List<Order> getOrders(long userId) {
-        return orderDao.getOrdersByUser(userId);
+    private List<OrderItem> snapshotItems(List<CartItem> cartItems) {
+        List<OrderItem> orderItems = new ArrayList<>();
+        for (CartItem cartItem : cartItems) {
+            Product product = cartItem.getProduct();
+            orderItems.add(new OrderItem(cartItem.getProductId(), product.getName(),
+                    product.getPrice(), cartItem.getQuantity()));
+        }
+        return orderItems;
     }
 
     public List<OrderSummary> getOrderSummaries(long userId) {
-        return orderDao.getOrderSummariesByUser(userId);
+        return sessionManager.isCurrentUser(userId) ? orderDao.getOrderSummariesByUser(userId) : Collections.emptyList();
     }
 
     public Order getOrderDetail(long orderId) {
-        return orderDao.getById(orderId);
+        Order order = orderDao.getById(orderId);
+        return order != null && sessionManager.isCurrentUser(order.getUserId()) ? order : null;
     }
 
     public boolean cancelOrder(long orderId, long userId) {
-        Order order = orderDao.getById(orderId);
-        if (order != null && order.getUserId() == userId && AppConstants.ORDER_STATUS_PENDING.equalsIgnoreCase(order.getStatus())) {
-            return orderDao.updateStatus(orderId, AppConstants.ORDER_STATUS_CANCELLED);
-        }
-        return false;
+        return sessionManager.isCurrentUser(userId) && orderDao.cancelPendingOrder(orderId, userId);
     }
 
     public boolean reorder(long orderId, long userId) {
+        if (!sessionManager.isCurrentUser(userId)) return false;
         Order order = orderDao.getById(orderId);
         if (order == null || order.getUserId() != userId || order.getOrderItems() == null) {
             return false;
@@ -220,8 +200,7 @@ public class OrderController {
         for (OrderItem item : order.getOrderItems()) {
             Product product = productDao.getById(item.getProductId());
             if (product != null && product.isActive()) {
-                cartDao.addOrIncrease(userId, product.getId(), item.getQuantity());
-                anyAdded = true;
+                anyAdded |= cartDao.addOrIncrease(userId, product.getId(), item.getQuantity());
             }
         }
         return anyAdded;

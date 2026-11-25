@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Data Access Object for ProductImage entities.
+ * truy xuất ảnh sản phẩm.
  */
 public class ProductImageDao {
     private final DatabaseHelper dbHelper;
@@ -37,20 +37,21 @@ public class ProductImageDao {
         return rows > 0;
     }
 
-    public boolean deleteAssetImagesByProduct(long productId) {
+    /** lưu thứ tự ảnh, giữ ảnh cũ nếu có lỗi. */
+    public boolean replaceAll(long productId, List<String> paths) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = DbConstants.COLUMN_PRODUCT_IMAGE_PRODUCT_ID + " = ? AND " + DbConstants.COLUMN_PRODUCT_IMAGE_PATH + " LIKE ?";
-        String[] whereArgs = {String.valueOf(productId), DbConstants.ASSET_PREFIX + "%"};
-        int rows = db.delete(DbConstants.TABLE_PRODUCT_IMAGES, whereClause, whereArgs);
-        return rows > 0;
-    }
-
-    public boolean deleteNonAssetImagesByProduct(long productId) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        String whereClause = DbConstants.COLUMN_PRODUCT_IMAGE_PRODUCT_ID + " = ? AND " + DbConstants.COLUMN_PRODUCT_IMAGE_PATH + " NOT LIKE ?";
-        String[] whereArgs = {String.valueOf(productId), DbConstants.ASSET_PREFIX + "%"};
-        int rows = db.delete(DbConstants.TABLE_PRODUCT_IMAGES, whereClause, whereArgs);
-        return rows > 0;
+        db.beginTransaction();
+        try {
+            deleteByProduct(productId);
+            for (int i = 0; i < paths.size(); i++) {
+                String path = paths.get(i);
+                if (path == null || path.trim().isEmpty() || insert(productId, path, i) == -1) return false;
+            }
+            db.setTransactionSuccessful();
+            return true;
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public List<String> getByProduct(long productId) {
@@ -95,14 +96,4 @@ public class ProductImageDao {
         return map;
     }
 
-    public Map<Long, String> getCoverImagesForAllProducts() {
-        Map<Long, String> map = new HashMap<>();
-        Map<Long, List<String>> allGrouped = getAllImagesGroupedByProduct();
-        for (Map.Entry<Long, List<String>> entry : allGrouped.entrySet()) {
-            if (entry.getValue() != null && !entry.getValue().isEmpty()) {
-                map.put(entry.getKey(), entry.getValue().get(0));
-            }
-        }
-        return map;
-    }
 }

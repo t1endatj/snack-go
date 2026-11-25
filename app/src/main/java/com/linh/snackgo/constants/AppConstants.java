@@ -2,10 +2,10 @@ package com.linh.snackgo.constants;
 
 public final class AppConstants {
     private AppConstants() {
-        // Private constructor to prevent instantiation
+        // ngăn tạo đối tượng
     }
 
-    // Business rules & defaults
+    // quy tắc nghiệp vụ và giá trị mặc định
     public static final long DEFAULT_DELIVERY_FEE = 15000L;
     public static final long FREE_DELIVERY_THRESHOLD = 100000L;
     public static final String PROMO_CODE = "SNACK10";
@@ -22,7 +22,7 @@ public final class AppConstants {
     public static final int SEARCH_DEBOUNCE_MS = 250;
     public static final int GRID_SPAN_COUNT = 2;
 
-    // BlendImageView constants
+    // cấu hình hiển thị ảnh
     public static final float DEFAULT_BLEND_PADDING_RATIO = 0.10f;
     public static final float BLEND_BRIGHTNESS_SCALE = 1.06f;
     public static final int WHITE_SAMPLE_THRESHOLD = 235;
@@ -33,40 +33,40 @@ public final class AppConstants {
     public static final int MAX_LEN_SHORT_FIELD = 100;
     public static final int MAX_RELATED_PRODUCTS = 6;
 
-    // Admin product constraints
+    // giới hạn dữ liệu sản phẩm
     public static final int MAX_PRODUCT_NAME_LENGTH = 100;
     public static final long MAX_PRODUCT_PRICE = 100000000L;
-    public static final int MAX_PRODUCT_DESC_LENGTH = 1000;
+    public static final int MAX_PRODUCT_DESC_LENGTH = 2000;
     public static final int MAX_PRODUCT_TAG_LENGTH = 30;
     public static final int MAX_PRODUCT_IMAGES = 6;
     public static final String IMAGE_FOLDER_PRODUCTS = "products";
     public static final int MAX_IMAGE_SIDE_PX = 1024;
     public static final int JPEG_QUALITY = 85;
 
-    // Seeded Admin Credentials
+    // tài khoản quản trị mẫu
     public static final String SEED_ADMIN_EMAIL = "admin@snackgo.com";
     public static final String SEED_ADMIN_PASSWORD = "Admin@123";
     public static final String SEED_ADMIN_NAME = "Quản trị viên";
     public static final String SEED_ADMIN_PHONE = "0900000000";
 
-    // Roles
+    // vai trò người dùng
     public static final String ROLE_USER = "USER";
     public static final String ROLE_ADMIN = "ADMIN";
 
-    // Categories
+    // danh mục sản phẩm
     public static final String CATEGORY_ALL = "all";
     public static final String CATEGORY_SNACK = "snack";
     public static final String CATEGORY_DRINK = "drink";
     public static final String CATEGORY_CANDY = "candy";
     public static final String CATEGORY_FAVORITE = "favorite";
 
-    // Order Statuses
+    // trạng thái đơn hàng
     public static final String ORDER_STATUS_PENDING = "PENDING";
     public static final String ORDER_STATUS_DELIVERING = "DELIVERING";
     public static final String ORDER_STATUS_COMPLETED = "COMPLETED";
     public static final String ORDER_STATUS_CANCELLED = "CANCELLED";
 
-    // Payment Methods
+    // phương thức thanh toán
     public static final String PAYMENT_CASH = "CASH";
     public static final String PAYMENT_BANK = "BANK";
     public static final String PAYMENT_EWALLET = "EWALLET";

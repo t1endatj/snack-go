@@ -8,12 +8,12 @@ import com.linh.snackgo.data.ProductImageDao;
 import com.linh.snackgo.model.Product;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
- * Background syncer that scans assets/products/<folder_name> and populates product_images table idempotently.
+ * đồng bộ ảnh từ thư mục tài nguyên vào cơ sở dữ liệu.
  */
 public class ProductImageSyncer {
 
@@ -30,46 +30,34 @@ public class ProductImageSyncer {
     public void syncAssetImages() {
         AssetManager assetManager = context.getAssets();
         List<Product> products = productDao.getAllActive();
-        if (products == null || products.isEmpty()) return;
-
         for (Product product : products) {
             String folderName = product.getImage();
-            if (folderName == null || folderName.trim().isEmpty() || folderName.startsWith("/")) {
+            if (!product.getImages().isEmpty() || folderName == null || folderName.trim().isEmpty() || folderName.startsWith("/")) {
                 continue;
             }
 
             try {
-                String assetPath = "products/" + folderName.trim();
-                String[] files = assetManager.list(assetPath);
-                if (files == null || files.length == 0) {
-                    continue;
-                }
-
-                List<String> validFiles = new ArrayList<>();
-                for (String file : files) {
-                    String lower = file.toLowerCase();
-                    if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".webp")) {
-                        validFiles.add(file);
-                    }
-                }
-
-                if (validFiles.isEmpty()) {
-                    continue;
-                }
-
-                Collections.sort(validFiles, (f1, f2) -> compareNatural(f1, f2));
-
-                // Delete existing asset rows for this product and re-insert
-                productImageDao.deleteAssetImagesByProduct(product.getId());
-
-                for (int i = 0; i < validFiles.size(); i++) {
-                    String path = DbConstants.ASSET_PREFIX + assetPath + "/" + validFiles.get(i);
-                    productImageDao.insert(product.getId(), path, i);
-                }
+                List<String> paths = readImagePaths(assetManager, folderName.trim());
+                if (!paths.isEmpty()) productImageDao.replaceAll(product.getId(), paths);
             } catch (IOException ignored) {
-                // Folder missing or inaccessible, ignore safely
+                // bỏ qua thư mục không đọc được
             }
         }
+    }
+
+    private List<String> readImagePaths(AssetManager assets, String folderName) throws IOException {
+        String assetPath = "products/" + folderName;
+        String[] files = assets.list(assetPath);
+        List<String> paths = new ArrayList<>();
+        if (files == null) return paths;
+        for (String file : files) {
+            String lower = file.toLowerCase(Locale.ROOT);
+            if (lower.endsWith(".jpg") || lower.endsWith(".jpeg") || lower.endsWith(".png") || lower.endsWith(".webp")) {
+                paths.add(DbConstants.ASSET_PREFIX + assetPath + "/" + file);
+            }
+        }
+        Collections.sort(paths, ProductImageSyncer::compareNatural);
+        return paths;
     }
 
     private static int compareNatural(String s1, String s2) {

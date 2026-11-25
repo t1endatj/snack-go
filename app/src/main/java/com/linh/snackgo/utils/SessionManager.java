@@ -4,74 +4,68 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.linh.snackgo.constants.AppConstants;
 import com.linh.snackgo.constants.PrefConstants;
+import com.linh.snackgo.data.UserDao;
+import com.linh.snackgo.model.User;
 
 public class SessionManager {
     private final SharedPreferences preferences;
-    private final SharedPreferences.Editor editor;
+    private final UserDao userDao;
 
     public SessionManager(Context context) {
         preferences = context.getApplicationContext().getSharedPreferences(PrefConstants.PREF_NAME, Context.MODE_PRIVATE);
-        editor = preferences.edit();
+        userDao = new UserDao(context);
+        preferences.edit().remove(PrefConstants.KEY_USER_NAME).remove(PrefConstants.KEY_USER_EMAIL)
+                .remove(PrefConstants.KEY_USER_PHONE).remove(PrefConstants.KEY_USER_ADDRESS).apply();
     }
 
-    public void createLoginSession(long userId, String role, String userName, String email) {
-        editor.putBoolean(PrefConstants.KEY_IS_LOGGED_IN, true);
-        editor.putLong(PrefConstants.KEY_USER_ID, userId);
-        editor.putString(PrefConstants.KEY_USER_ROLE, role);
-        editor.putString(PrefConstants.KEY_USER_NAME, userName);
-        editor.putString(PrefConstants.KEY_USER_EMAIL, email);
-        editor.apply();
+    public void createLoginSession(long userId, String role) {
+        preferences.edit().putBoolean(PrefConstants.KEY_IS_LOGGED_IN, true)
+                .putLong(PrefConstants.KEY_USER_ID, userId).putString(PrefConstants.KEY_USER_ROLE, role).apply();
     }
 
     public boolean isLoggedIn() {
-        return preferences.getBoolean(PrefConstants.KEY_IS_LOGGED_IN, false);
+        return preferences.getBoolean(PrefConstants.KEY_IS_LOGGED_IN, false) && getUserId() > 0;
     }
 
     public long getUserId() {
         return preferences.getLong(PrefConstants.KEY_USER_ID, -1);
     }
 
-    public String getUserRole() {
-        return preferences.getString(PrefConstants.KEY_USER_ROLE, AppConstants.ROLE_USER);
+    public boolean isCurrentUser(long userId) {
+        return isLoggedIn() && getUserId() == userId;
     }
 
     public boolean isAdmin() {
-        return AppConstants.ROLE_ADMIN.equalsIgnoreCase(getUserRole());
+        User user = getCurrentUser();
+        return user != null && AppConstants.ROLE_ADMIN.equals(user.getRole());
+    }
+
+    public User getCurrentUser() {
+        return isLoggedIn() ? userDao.getById(getUserId()) : null;
     }
 
     public String getUserName() {
-        return preferences.getString(PrefConstants.KEY_USER_NAME, "");
-    }
-
-    public String getUserEmail() {
-        return preferences.getString(PrefConstants.KEY_USER_EMAIL, "");
+        User user = getCurrentUser();
+        return user != null ? user.getFullName() : "";
     }
 
     public String getUserPhone() {
-        return preferences.getString(PrefConstants.KEY_USER_PHONE, "");
+        User user = getCurrentUser();
+        return user != null ? user.getPhone() : "";
     }
 
     public String getUserAddress() {
-        return preferences.getString(PrefConstants.KEY_USER_ADDRESS, "");
-    }
-
-    public void updateUserProfile(String name, String phone, String address) {
-        editor.putString(PrefConstants.KEY_USER_NAME, name);
-        editor.putString(PrefConstants.KEY_USER_PHONE, phone);
-        editor.putString(PrefConstants.KEY_USER_ADDRESS, address);
-        editor.apply();
+        User user = getCurrentUser();
+        return user != null ? user.getAddress() : "";
     }
 
     public void logout() {
-        boolean onboardingDone = isOnboardingDone();
-        editor.clear();
-        editor.putBoolean(PrefConstants.KEY_ONBOARDING_DONE, onboardingDone);
-        editor.apply();
+        preferences.edit().remove(PrefConstants.KEY_IS_LOGGED_IN)
+                .remove(PrefConstants.KEY_USER_ID).remove(PrefConstants.KEY_USER_ROLE).apply();
     }
 
     public void setOnboardingDone(boolean done) {
-        editor.putBoolean(PrefConstants.KEY_ONBOARDING_DONE, done);
-        editor.apply();
+        preferences.edit().putBoolean(PrefConstants.KEY_ONBOARDING_DONE, done).apply();
     }
 
     public boolean isOnboardingDone() {

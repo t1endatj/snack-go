@@ -10,7 +10,7 @@ import com.linh.snackgo.utils.PasswordUtils;
 import com.linh.snackgo.utils.SessionManager;
 
 /**
- * Controller managing User profile retrieval, editing, password change, and session logout.
+ * xử lý hồ sơ, đổi mật khẩu và đăng xuất.
  */
 public class UserController {
     private final Context context;
@@ -56,11 +56,11 @@ public class UserController {
     }
 
     public User getCurrentUser() {
-        long userId = sessionManager.getUserId();
-        return userDao.getById(userId);
+        return sessionManager.getCurrentUser();
     }
 
     public UserResult updateProfile(long userId, String fullName, String phone, String address, String avatarPath) {
+        if (!sessionManager.isCurrentUser(userId)) return UserResult.error(context.getString(R.string.error_invalid_credentials), 0);
         if (fullName == null || fullName.trim().isEmpty()) {
             return UserResult.error(context.getString(R.string.error_empty_full_name), R.id.etFullName);
         }
@@ -83,7 +83,6 @@ public class UserController {
 
         boolean updated = userDao.update(userId, normalizedName, cleanPhone, cleanAddress, avatarPath);
         if (updated) {
-            sessionManager.updateUserProfile(normalizedName, cleanPhone, cleanAddress);
             return UserResult.success();
         } else {
             return UserResult.error(context.getString(R.string.error_order_failed), 0);
@@ -91,6 +90,7 @@ public class UserController {
     }
 
     public UserResult changePassword(long userId, String oldPassword, String newPassword, String confirmPassword) {
+        if (!sessionManager.isCurrentUser(userId)) return UserResult.error(context.getString(R.string.error_invalid_credentials), 0);
         if (oldPassword == null || oldPassword.isEmpty()) {
             return UserResult.error(context.getString(R.string.error_empty_old_password), R.id.etOldPassword);
         }

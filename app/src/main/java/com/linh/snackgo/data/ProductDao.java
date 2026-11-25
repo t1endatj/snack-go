@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import com.linh.snackgo.constants.AppConstants;
 import com.linh.snackgo.constants.DbConstants;
 import com.linh.snackgo.model.Product;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Data Access Object for Product entities.
+ * truy xuất dữ liệu sản phẩm.
  */
 public class ProductDao {
     private final DatabaseHelper dbHelper;
@@ -24,22 +25,49 @@ public class ProductDao {
     }
 
     public long insert(Product product) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        ContentValues values = mapProductToValues(product);
-        return db.insert(DbConstants.TABLE_PRODUCTS, null, values);
+        return saveProduct(product, false);
     }
 
     public boolean update(Product product) {
+        return saveProduct(product, true) != -1;
+    }
+
+    /** lưu sản phẩm và thứ tự ảnh trong cùng giao dịch. */
+    private long saveProduct(Product product, boolean editing) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = mapProductToValues(product);
-        String whereClause = DbConstants.COLUMN_PRODUCT_ID + " = ?";
-        String[] whereArgs = {String.valueOf(product.getId())};
-        int rows = db.update(DbConstants.TABLE_PRODUCTS, values, whereClause, whereArgs);
-        return rows > 0;
+        db.beginTransaction();
+        try {
+            long id = product.getId();
+            if (editing) {
+                values.remove(DbConstants.COLUMN_PRODUCT_SOLD_COUNT);
+                if (db.update(DbConstants.TABLE_PRODUCTS, values, DbConstants.COLUMN_PRODUCT_ID + " = ?",
+                        new String[]{String.valueOf(id)}) == 0) return -1;
+            } else {
+                id = db.insertOrThrow(DbConstants.TABLE_PRODUCTS, null, values);
+            }
+            if (!productImageDao.replaceAll(id, product.getImages())) return -1;
+            db.setTransactionSuccessful();
+            return id;
+        } catch (SQLiteException e) {
+            return -1;
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public boolean softDelete(long id) {
-        return updateActiveStatus(id, 0);
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        db.beginTransaction();
+        try {
+            if (!updateActiveStatus(id, 0)) return false;
+            db.delete(DbConstants.TABLE_CART_ITEMS, DbConstants.COLUMN_CART_PRODUCT_ID + " = ?",
+                    new String[]{String.valueOf(id)});
+            db.setTransactionSuccessful();
+            return true;
+        } finally {
+            db.endTransaction();
+        }
     }
 
     public boolean updateActiveStatus(long id, int isActive) {
@@ -68,62 +96,20 @@ public class ProductDao {
     }
 
     public List<Product> getAllActive() {
-        List<Product> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selection = DbConstants.COLUMN_PRODUCT_IS_ACTIVE + " = 1";
-
-        try (Cursor cursor = db.query(DbConstants.TABLE_PRODUCTS, null, selection, null, null, null, DbConstants.COLUMN_PRODUCT_ID + " DESC")) {
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    list.add(mapCursorToProduct(cursor));
-                } while (cursor.moveToNext());
-            }
-        }
-        attachImagesToProducts(list);
-        return list;
+        return getActiveByCategory(null);
     }
 
     public List<Product> getActiveByCategory(String category) {
-        if (category == null || AppConstants.CATEGORY_ALL.equalsIgnoreCase(category)) {
-            return getAllActive();
-        }
         List<Product> list = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selection = DbConstants.COLUMN_PRODUCT_IS_ACTIVE + " = 1 AND " + DbConstants.COLUMN_PRODUCT_CATEGORY + " = ?";
-        String[] selectionArgs = {category};
+        String selection = DbConstants.COLUMN_PRODUCT_IS_ACTIVE + " = 1";
+        String[] selectionArgs = null;
+        if (category != null && !AppConstants.CATEGORY_ALL.equalsIgnoreCase(category)) {
+            selection += " AND " + DbConstants.COLUMN_PRODUCT_CATEGORY + " = ?";
+            selectionArgs = new String[]{category};
+        }
 
         try (Cursor cursor = db.query(DbConstants.TABLE_PRODUCTS, null, selection, selectionArgs, null, null, DbConstants.COLUMN_PRODUCT_ID + " DESC")) {
-            if (cursor != null && cursor.moveToFirst()) {
-                do {
-                    list.add(mapCursorToProduct(cursor));
-                } while (cursor.moveToNext());
-            }
-        }
-        attachImagesToProducts(list);
-        return list;
-    }
-
-    public List<Product> searchActive(String keyword, String category) {
-        List<Product> list = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-
-        StringBuilder selection = new StringBuilder(DbConstants.COLUMN_PRODUCT_IS_ACTIVE + " = 1");
-        List<String> argsList = new ArrayList<>();
-
-        if (category != null && !category.isEmpty() && !AppConstants.CATEGORY_ALL.equalsIgnoreCase(category)) {
-            selection.append(" AND ").append(DbConstants.COLUMN_PRODUCT_CATEGORY).append(" = ?");
-            argsList.add(category);
-        }
-
-        if (keyword != null && !keyword.trim().isEmpty()) {
-            selection.append(" AND ").append(DbConstants.COLUMN_PRODUCT_NAME).append(" LIKE ?");
-            String likePattern = "%" + keyword.trim() + "%";
-            argsList.add(likePattern);
-        }
-
-        String[] selectionArgs = argsList.toArray(new String[0]);
-
-        try (Cursor cursor = db.query(DbConstants.TABLE_PRODUCTS, null, selection.toString(), selectionArgs, null, null, DbConstants.COLUMN_PRODUCT_ID + " DESC")) {
             if (cursor != null && cursor.moveToFirst()) {
                 do {
                     list.add(mapCursorToProduct(cursor));
