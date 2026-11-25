@@ -46,12 +46,45 @@
 
             </LinearLayout>
 
+            <!-- thanh chọn tất cả sản phẩm -->
+            <LinearLayout
+                android:id="@+id/layoutSelectAllBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="8dp"
+                android:visibility="gone">
+
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/cbSelectAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="40dp"
+                    android:text="@string/label_select_all"
+                    android:textColor="@color/primary_ink"
+                    android:textSize="14sp"
+                    app:buttonTint="@color/primary_ink" />
+
+                <TextView
+                    android:id="@+id/tvSelectedHint"
+                    style="@style/TextAppearance.SnackGo.Body"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="end"
+                    android:text="@string/label_select_items_to_checkout"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
             <!-- danh sách sản phẩm trong giỏ -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCartItems"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:nestedScrollingEnabled="false" />
 
             <!-- trạng thái giỏ hàng trống -->

@@ -98,6 +98,11 @@ public class OrderController {
 
     public OrderResult placeOrder(long userId, String receiverName, String phone, String address,
                                    String paymentMethod, boolean promoApplied) {
+        return placeOrder(userId, receiverName, phone, address, paymentMethod, promoApplied, null);
+    }
+
+    public OrderResult placeOrder(long userId, String receiverName, String phone, String address,
+                                   String paymentMethod, boolean promoApplied, List<Long> selectedProductIds) {
         // 1. Validations
         if (receiverName == null || receiverName.trim().isEmpty()) {
             return OrderResult.error(context.getString(R.string.error_empty_full_name), R.id.etReceiverName);
@@ -125,9 +130,17 @@ public class OrderController {
             return OrderResult.error(context.getString(R.string.error_order_failed), 0);
         }
 
-        // 2. Re-query cart items from DB (Never trust UI passed items)
-        List<CartItem> cartItems = cartDao.getItems(userId);
-        if (cartItems == null || cartItems.isEmpty()) {
+        // 2. Re-query cart items from DB (Never trust UI passed items) and filter by selected IDs
+        List<CartItem> allCartItems = cartDao.getItems(userId);
+        List<CartItem> cartItems = new ArrayList<>();
+        if (allCartItems != null) {
+            for (CartItem item : allCartItems) {
+                if (selectedProductIds == null || selectedProductIds.contains(item.getProductId())) {
+                    cartItems.add(item);
+                }
+            }
+        }
+        if (cartItems.isEmpty()) {
             return OrderResult.error(context.getString(R.string.label_empty_cart_title), 0);
         }
 
