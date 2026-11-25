@@ -3,7 +3,7 @@
     <string name="app_name">SnackGo</string>
     <string name="app_tagline">Đặt món ăn vặt &amp; thức uống cực nhanh</string>
 
-    <!-- Onboarding -->
+    <!-- giới thiệu ứng dụng -->
     <string name="onboarding_title_1">Khám phá món ngon mỗi ngày</string>
     <string name="onboarding_desc_1">Hàng ngàn món ăn vặt và đồ uống hấp dẫn đang chờ đón bạn thưởng thức.</string>
     <string name="onboarding_title_2">Đặt hàng chỉ với vài chạm</string>
@@ -15,7 +15,7 @@
     <string name="label_next">Tiếp tục</string>
     <string name="label_onboarding_caption">Thưởng thức món ngon ngay hôm nay cùng SnackGo</string>
 
-    <!-- Login -->
+    <!-- đăng nhập -->
     <string name="title_login">Đăng nhập</string>
     <string name="title_welcome_back">Chào mừng trở lại!</string>
     <string name="subtitle_login">Nhập thông tin để tiếp tục trải nghiệm cùng SnackGo</string>
@@ -24,7 +24,7 @@
     <string name="label_dont_have_account">Chưa có tài khoản?</string>
     <string name="label_register_now">Đăng ký ngay</string>
 
-    <!-- Register -->
+    <!-- đăng ký -->
     <string name="title_register">Tạo tài khoản mới</string>
     <string name="subtitle_register">Đăng ký để trải nghiệm đặt món cực nhanh và tiện lợi</string>
     <string name="hint_full_name">Họ và tên</string>
@@ -36,7 +36,7 @@
     <string name="label_login_now">Đăng nhập</string>
     <string name="prefix_phone">+84 </string>
 
-    <!-- Validation & Auth Error Messages -->
+    <!-- thông báo lỗi nhập liệu và xác thực -->
     <string name="error_empty_email_or_phone">Vui lòng nhập Email hoặc Số điện thoại</string>
     <string name="error_empty_password">Vui lòng nhập mật khẩu</string>
     <string name="error_invalid_credentials">Email/Số điện thoại hoặc mật khẩu không chính xác</string>
@@ -61,7 +61,7 @@
     <string name="error_new_password_same">Mật khẩu mới phải khác mật khẩu hiện tại</string>
     <string name="error_admin_access_required">Chức năng chỉ dành cho Quản trị viên</string>
 
-    <!-- Navigation & Home UI -->
+    <!-- điều hướng và trang chủ -->
     <string name="label_greeting_format">Xin chào, %s</string>
     <string name="label_greeting_placeholder">Xin chào, Bạn</string>
     <string name="label_deliver_to">Giao tới:</string>
@@ -94,7 +94,7 @@
     <string name="label_sort_low_high">Giá từ thấp đến cao</string>
     <string name="label_sort_high_low">Giá từ cao đến thấp</string>
 
-    <!-- Product Detail & Cart UI -->
+    <!-- chi tiết sản phẩm và giỏ hàng -->
     <string name="label_product_detail">Chi tiết sản phẩm</string>
     <string name="label_add_to_cart_detail">Thêm vào giỏ hàng</string>
     <string name="label_discount_percent_format">-%d%%</string>
@@ -119,7 +119,7 @@
     <string name="label_item_removed">Đã xóa khỏi giỏ hàng</string>
     <string name="label_undo">Hoàn tác</string>
 
-    <!-- Checkout & Order Success UI -->
+    <!-- thanh toán và đặt hàng thành công -->
     <string name="title_checkout">Thanh toán</string>
     <string name="section_delivery_address">Địa chỉ giao hàng</string>
     <string name="hint_receiver_name">Họ tên người nhận</string>
@@ -139,7 +139,7 @@
     <string name="btn_go_home">Về trang chủ</string>
     <string name="label_orders_count_format">Đã có %d đơn hàng</string>
 
-    <!-- Orders & Profile UI -->
+    <!-- đơn hàng và hồ sơ -->
     <string name="label_my_orders">Đơn hàng của tôi</string>
     <string name="title_order_detail">Chi tiết đơn hàng</string>
     <string name="label_order_items_title">Danh sách món ăn</string>
@@ -167,7 +167,7 @@
     <string name="msg_avatar_updated">Cập nhật ảnh đại diện thành công!</string>
     <string name="label_select_avatar">Chọn ảnh đại diện</string>
 
-    <!-- Admin Product CRUD & Multi-Image -->
+    <!-- quản lý sản phẩm và ảnh -->
     <string name="title_admin_product_list">Quản lý sản phẩm</string>
     <string name="title_add_product">Thêm sản phẩm</string>
     <string name="title_edit_product">Sửa sản phẩm</string>
@@ -198,10 +198,11 @@
     <string name="error_invalid_product_price">Giá bán không hợp lệ</string>
     <string name="error_orig_price_less">Giá gốc phải lớn hơn hoặc bằng giá bán</string>
     <string name="error_empty_product_category">Vui lòng chọn danh mục sản phẩm</string>
-    <string name="error_long_product_desc">Mô tả tối đa 1000 ký tự</string>
+    <string name="error_empty_product_desc">Vui lòng nhập mô tả sản phẩm</string>
+    <string name="error_long_product_desc">Mô tả tối đa 2000 ký tự</string>
     <string name="error_long_product_tag">Nhãn tối đa 30 ký tự</string>
 
-    <!-- Navigation & Common Labels -->
+    <!-- điều hướng và nhãn dùng chung -->
     <string name="label_home">Trang chủ</string>
     <string name="label_categories">Danh mục</string>
     <string name="label_cart">Giỏ hàng</string>
@@ -222,13 +223,13 @@
     <string name="label_empty_cart">Giỏ hàng của bạn đang trống</string>
     <string name="label_empty_orders">Bạn chưa có đơn hàng nào</string>
 
-    <!-- Order Statuses -->
+    <!-- trạng thái đơn hàng -->
     <string name="label_order_status_pending">Chờ xác nhận</string>
     <string name="label_order_status_shipping">Đang giao</string>
     <string name="label_order_status_completed">Hoàn thành</string>
     <string name="label_order_status_cancelled">Đã hủy</string>
 
-    <!-- Product Detail Rich Info & Commitments -->
+    <!-- thông tin sản phẩm và cam kết -->
     <string name="label_delivery_time_15m">15 phút</string>
     <string name="label_sold_count_format">Đã bán %d</string>
     <string name="label_sold_count_k_format">Đã bán %.1fk</string>

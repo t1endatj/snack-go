@@ -10,7 +10,7 @@ import com.linh.snackgo.utils.PasswordUtils;
 import com.linh.snackgo.utils.SessionManager;
 
 /**
- * Controller handling authentication business rules and logic.
+ * xử lý đăng nhập và đăng ký.
  */
 public class AuthController {
     private final Context context;
@@ -84,7 +84,7 @@ public class AuthController {
             return AuthResult.error(context.getString(R.string.error_invalid_credentials), 0);
         }
 
-        sessionManager.createLoginSession(user.getId(), user.getRole(), user.getFullName(), user.getEmail());
+        sessionManager.createLoginSession(user.getId(), user.getRole());
         return AuthResult.success(user);
     }
 
@@ -144,7 +144,7 @@ public class AuthController {
         }
 
         newUser.setId(userId);
-        sessionManager.createLoginSession(userId, newUser.getRole(), newUser.getFullName(), newUser.getEmail());
+        sessionManager.createLoginSession(userId, newUser.getRole());
         return AuthResult.success(newUser);
     }
 }

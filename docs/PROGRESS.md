@@ -71,3 +71,69 @@
 
 ## Known Issues
 - None. Build passes cleanly with zero errors.
+
+## 2026-11-25 - Pull origin/main
+
+### Đã làm
+- Đọc tổng quan code và kiểm tra các nhánh remote; cả hai nhánh `fix/category-and-product-specs` và `fix/ui-and-cart-selection` đã được gộp vào `main`.
+- Chạy `git pull --ff-only origin main`, cập nhật local `main` từ `88c3676` lên `e9d4e6d` (13 commit).
+- Xác nhận `HEAD` và `origin/main` đồng bộ, không phát sinh merge commit.
+- Build bản vừa pull bằng `:app:assembleDebug`: BUILD SUCCESSFUL.
+- Giữ bản ghi kiểm tra local trước đó trong `.git/PROGRESS-before-pull-f021a7a72d9d43a893f7ad47aae73612.md` để tránh trùng file khi pull.
+- Giữ nội dung tiến độ từ remote và bổ sung bản ghi này; không sửa mã nguồn ngoài các thay đổi được pull.
+
+### Chưa làm
+- Chưa kiểm thử ứng dụng trên thiết bị hoặc máy ảo.
+
+### Vấn đề đã biết
+- Gradle cảnh báo tùy chọn `android.overridePathCheck=true` đang ở trạng thái thử nghiệm.
+
+## 2026-11-25 - Hoàn tác sửa backend
+
+- Đã hoàn tác 20 file mã nguồn/tài nguyên về HEAD `e9d4e6d`, xóa `PhoneUtils.java` và `BackendRegressionTest.java` vừa tạo.
+- Giữ bản code đã pull từ `origin/main` và bản ghi pull trước đó; chưa commit/push.
+- File còn thay đổi local: `docs/PROGRESS.md` (bản ghi pull và hoàn tác).
+- Build lại sau hoàn tác: `:app:assembleDebug` BUILD SUCCESSFUL; mã nguồn khớp HEAD.
+- Chưa cài lại APK lên máy ảo; không thay đổi dữ liệu ứng dụng trên máy ảo.
+
+## 2026-11-25 - Sửa backend gọn và tách hàm
+
+### Đã làm
+- Tách `placeOrder` thành kiểm tra giao hàng, lọc món, tạo đơn và snapshot; tách `createOrder` thành map dữ liệu và lưu chi tiết; tách map giỏ hàng, kiểm tra giá admin, resize ảnh và đọc danh sách asset.
+- Gộp lưu sản phẩm/ảnh trong transaction; bỏ tìm kiếm SQL trùng với ProductController, hàm xóa giỏ không có nơi gọi và các hàm quản lý ảnh/session không còn dùng.
+- Chặn số lượng <= 0, tràn số và thêm sản phẩm đã xóa; tăng số lượng trong transaction để tránh mất cập nhật.
+- Đặt hàng dùng transaction và xóa có điều kiện theo số lượng/giá hiện tại để chặn đặt trùng hoặc snapshot cũ; chỉ xóa món đã chọn. Hủy đơn chỉ áp dụng cho chủ đơn khi PENDING.
+- Kiểm tra chủ tài khoản và quyền admin ở controller; session chỉ giữ id, role và cờ, đọc hồ sơ từ SQLite, giữ yêu thích khi đăng xuất. Checkout không ghi đè hồ sơ người mua.
+- Giữ thứ tự ảnh bìa khi lưu/sync, giữ file ảnh khi soft delete/khôi phục, bảo toàn sold_count khi sửa sản phẩm. Mô tả bắt buộc, giới hạn 2000 ký tự để lưu được mô tả mẫu hiện có.
+- Mã trong `app/src/main` giảm ròng 92 dòng so với HEAD; giữ database v30 và các model hiện tại, không thêm thư viện.
+- Thêm một file kiểm thử tập trung cho các luồng thay đổi.
+
+### Xác minh
+- `:app:assembleDebug :app:connectedDebugAndroidTest`: BUILD SUCCESSFUL; 11 tests, 0 failures, 0 errors, 0 skipped trên máy ảo API 37.
+- Cài APK debug, mở lạnh thành công đến OnboardingActivity và xác nhận tiến trình vẫn chạy.
+- `git diff --check` qua; không sửa model, schema/database version hoặc Gradle. Chưa commit/push.
+
+### File tạo / sửa
+- Tạo: `app/src/androidTest/java/com/linh/snackgo/BackendSmokeTest.java`.
+- Sửa trong `app/src/main/java/com/linh/snackgo/controller/`: `AdminProductController.java`, `AuthController.java`, `CartController.java`, `OrderController.java`, `UserController.java`.
+- Sửa trong `app/src/main/java/com/linh/snackgo/data/`: `CartDao.java`, `OrderDao.java`, `ProductDao.java`, `ProductImageDao.java`.
+- Sửa trong `app/src/main/java/com/linh/snackgo/utils/`: `ProductImageSyncer.java`, `SessionManager.java`.
+- Sửa: `app/src/main/java/com/linh/snackgo/constants/AppConstants.java`, `app/src/main/res/values/strings.xml`, `docs/PROGRESS.md`.
+
+### Chưa làm / vấn đề còn lại
+- Chưa kiểm tra toàn bộ giao diện, thiết bị thật hoặc API 24.
+- Schema v30 chưa lưu tên người nhận riêng theo đơn; giao diện chi tiết đơn vẫn hiển thị tên tài khoản.
+- Cấu hình font Poppins từ bản gốc còn lỗi lint đã biết; lần này giữ phạm vi backend.
+
+## 2026-11-25 - Sửa chú thích
+
+- Đã đổi 36 chú thích trong 13 file sang tiếng Việt có dấu, chữ đầu viết thường và ngắn gọn; giữ nguyên logic và nội dung chuỗi hiển thị.
+- File sửa: `AppConstants.java`; 5 controller và 4 DAO ở mục trên; `ProductImageSyncer.java`, `BackendSmokeTest.java`, `strings.xml`, `docs/PROGRESS.md`. Không tạo file mới.
+- Đã đối chiếu nội dung ngoài chú thích trước/sau để xác nhận không đổi mã thực thi.
+- Build debug thành công; không chạy lại kiểm thử nghiệp vụ vì chỉ sửa chú thích. Các vấn đề đã biết giữ như mục trên.
+
+## 2026-11-25 - Phát hành lên main
+
+- Chuẩn bị commit toàn bộ phần sửa backend và chú thích theo yêu cầu; nhánh đích là `origin/main`.
+- Fetch xác nhận local/remote cùng `e9d4e6d`; build debug lại thành công. Kết quả 11 kiểm thử nghiệp vụ và các hạn chế vẫn như trên.
+- Phạm vi gồm 15 file: danh sách mã nguồn, tài nguyên, kiểm thử và tài liệu đã ghi ở các mục trước; không tạo thêm file.

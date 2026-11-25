@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import com.linh.snackgo.constants.DbConstants;
+import com.linh.snackgo.constants.AppConstants;
 import com.linh.snackgo.model.Order;
 import com.linh.snackgo.model.OrderItem;
 import com.linh.snackgo.model.OrderSummary;
@@ -15,10 +16,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.TimeZone;
 
 /**
- * Data Access Object for Order and OrderItem entities.
+ * truy xuất đơn hàng và chi tiết đơn.
  */
 public class OrderDao {
     private final DatabaseHelper dbHelper;
@@ -37,58 +37,11 @@ public class OrderDao {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         db.beginTransaction();
         try {
-            // 1. Generate Order Code if empty
-            if (order.getOrderCode() == null || order.getOrderCode().trim().isEmpty()) {
-                order.setOrderCode(generateOrderCodeInternal(db));
-            }
-
-            // 2. Insert Order
-            ContentValues orderValues = new ContentValues();
-            orderValues.put(DbConstants.COLUMN_ORDER_USER_ID, order.getUserId());
-            orderValues.put(DbConstants.COLUMN_ORDER_CODE, order.getOrderCode());
-            orderValues.put(DbConstants.COLUMN_ORDER_TOTAL_AMOUNT, order.getTotalAmount());
-            orderValues.put(DbConstants.COLUMN_ORDER_DISCOUNT_AMOUNT, order.getDiscountAmount());
-            orderValues.put(DbConstants.COLUMN_ORDER_DELIVERY_FEE, order.getDeliveryFee());
-            orderValues.put(DbConstants.COLUMN_ORDER_PAYMENT_METHOD, order.getPaymentMethod());
-            orderValues.put(DbConstants.COLUMN_ORDER_DELIVERY_ADDRESS, order.getDeliveryAddress());
-            orderValues.put(DbConstants.COLUMN_ORDER_PHONE, order.getPhone());
-            orderValues.put(DbConstants.COLUMN_ORDER_STATUS, order.getStatus());
-
-            long orderId = db.insert(DbConstants.TABLE_ORDERS, null, orderValues);
-            if (orderId == -1) {
-                return false;
-            }
-            order.setId(orderId);
-
-            // 3. Insert Order Items (Snapshot)
-            for (OrderItem item : items) {
-                ContentValues itemValues = new ContentValues();
-                itemValues.put(DbConstants.COLUMN_ORDER_ITEM_ORDER_ID, orderId);
-                itemValues.put(DbConstants.COLUMN_ORDER_ITEM_PRODUCT_ID, item.getProductId());
-                itemValues.put(DbConstants.COLUMN_ORDER_ITEM_PRODUCT_NAME, item.getProductName());
-                itemValues.put(DbConstants.COLUMN_ORDER_ITEM_UNIT_PRICE, item.getUnitPrice());
-                itemValues.put(DbConstants.COLUMN_ORDER_ITEM_QUANTITY, item.getQuantity());
-
-                long itemId = db.insert(DbConstants.TABLE_ORDER_ITEMS, null, itemValues);
-                if (itemId == -1) {
-                    return false;
-                }
-
-                // Increment sold_count inside the transaction
-                db.execSQL("UPDATE " + DbConstants.TABLE_PRODUCTS + " SET "
-                        + DbConstants.COLUMN_PRODUCT_SOLD_COUNT + " = " + DbConstants.COLUMN_PRODUCT_SOLD_COUNT + " + ? "
-                        + "WHERE " + DbConstants.COLUMN_PRODUCT_ID + " = ?",
-                        new Object[]{item.getQuantity(), item.getProductId()});
-            }
-
-            // 4. Remove only ordered items from User's Cart
-            for (OrderItem item : items) {
-                db.delete(DbConstants.TABLE_CART_ITEMS,
-                        DbConstants.COLUMN_CART_USER_ID + " = ? AND " + DbConstants.COLUMN_CART_PRODUCT_ID + " = ?",
-                        new String[]{String.valueOf(order.getUserId()), String.valueOf(item.getProductId())});
-            }
-
+            order.setOrderCode(generateOrderCode(db));
+            long orderId = db.insertOrThrow(DbConstants.TABLE_ORDERS, null, mapOrderToValues(order));
+            if (!saveItems(db, orderId, order.getUserId(), items)) return false;
             db.setTransactionSuccessful();
+            order.setId(orderId);
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,6 +49,48 @@ public class OrderDao {
         } finally {
             db.endTransaction();
         }
+    }
+
+    private ContentValues mapOrderToValues(Order order) {
+        ContentValues values = new ContentValues();
+        values.put(DbConstants.COLUMN_ORDER_USER_ID, order.getUserId());
+        values.put(DbConstants.COLUMN_ORDER_CODE, order.getOrderCode());
+        values.put(DbConstants.COLUMN_ORDER_TOTAL_AMOUNT, order.getTotalAmount());
+        values.put(DbConstants.COLUMN_ORDER_DISCOUNT_AMOUNT, order.getDiscountAmount());
+        values.put(DbConstants.COLUMN_ORDER_DELIVERY_FEE, order.getDeliveryFee());
+        values.put(DbConstants.COLUMN_ORDER_PAYMENT_METHOD, order.getPaymentMethod());
+        values.put(DbConstants.COLUMN_ORDER_DELIVERY_ADDRESS, order.getDeliveryAddress());
+        values.put(DbConstants.COLUMN_ORDER_PHONE, order.getPhone());
+        values.put(DbConstants.COLUMN_ORDER_STATUS, order.getStatus());
+        return values;
+    }
+
+    private boolean saveItems(SQLiteDatabase db, long orderId, long userId, List<OrderItem> items) {
+        for (OrderItem item : items) {
+            if (item.getQuantity() < 1 || item.getQuantity() > AppConstants.MAX_QUANTITY_PER_ITEM
+                    || !removeOrderedItem(db, userId, item)) return false;
+            ContentValues values = new ContentValues();
+            values.put(DbConstants.COLUMN_ORDER_ITEM_ORDER_ID, orderId);
+            values.put(DbConstants.COLUMN_ORDER_ITEM_PRODUCT_ID, item.getProductId());
+            values.put(DbConstants.COLUMN_ORDER_ITEM_PRODUCT_NAME, item.getProductName());
+            values.put(DbConstants.COLUMN_ORDER_ITEM_UNIT_PRICE, item.getUnitPrice());
+            values.put(DbConstants.COLUMN_ORDER_ITEM_QUANTITY, item.getQuantity());
+            db.insertOrThrow(DbConstants.TABLE_ORDER_ITEMS, null, values);
+            db.execSQL("UPDATE " + DbConstants.TABLE_PRODUCTS + " SET " + DbConstants.COLUMN_PRODUCT_SOLD_COUNT
+                    + " = " + DbConstants.COLUMN_PRODUCT_SOLD_COUNT + " + ? WHERE " + DbConstants.COLUMN_PRODUCT_ID + " = ?",
+                    new Object[]{item.getQuantity(), item.getProductId()});
+        }
+        return true;
+    }
+
+    /** chặn đặt trùng hoặc giỏ hàng đã thay đổi. */
+    private boolean removeOrderedItem(SQLiteDatabase db, long userId, OrderItem item) {
+        String where = DbConstants.COLUMN_CART_USER_ID + " = ? AND " + DbConstants.COLUMN_CART_PRODUCT_ID
+                + " = ? AND " + DbConstants.COLUMN_CART_QUANTITY + " = ? AND " + DbConstants.COLUMN_CART_PRODUCT_ID
+                + " IN (SELECT " + DbConstants.COLUMN_PRODUCT_ID + " FROM " + DbConstants.TABLE_PRODUCTS
+                + " WHERE " + DbConstants.COLUMN_PRODUCT_PRICE + " = ? AND " + DbConstants.COLUMN_PRODUCT_IS_ACTIVE + " = 1)";
+        return db.delete(DbConstants.TABLE_CART_ITEMS, where, new String[]{String.valueOf(userId),
+                String.valueOf(item.getProductId()), String.valueOf(item.getQuantity()), String.valueOf(item.getUnitPrice())}) == 1;
     }
 
     public List<Order> getOrdersByUser(long userId) {
@@ -185,25 +180,21 @@ public class OrderDao {
         return list;
     }
 
-    public boolean updateStatus(long orderId, String newStatus) {
+    public boolean cancelPendingOrder(long orderId, long userId) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
-        values.put(DbConstants.COLUMN_ORDER_STATUS, newStatus);
+        values.put(DbConstants.COLUMN_ORDER_STATUS, AppConstants.ORDER_STATUS_CANCELLED);
 
-        String whereClause = DbConstants.COLUMN_ORDER_ID + " = ?";
-        String[] whereArgs = {String.valueOf(orderId)};
+        String whereClause = DbConstants.COLUMN_ORDER_ID + " = ? AND " + DbConstants.COLUMN_ORDER_USER_ID
+                + " = ? AND " + DbConstants.COLUMN_ORDER_STATUS + " = ?";
+        String[] whereArgs = {String.valueOf(orderId), String.valueOf(userId), AppConstants.ORDER_STATUS_PENDING};
 
         int rows = db.update(DbConstants.TABLE_ORDERS, values, whereClause, whereArgs);
         return rows > 0;
     }
 
-    public String generateOrderCode() {
-        return generateOrderCodeInternal(dbHelper.getReadableDatabase());
-    }
-
-    private String generateOrderCodeInternal(SQLiteDatabase db) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.getDefault());
-        sdf.setTimeZone(TimeZone.getDefault());
+    private String generateOrderCode(SQLiteDatabase db) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyMMdd", Locale.US);
         String dateStr = sdf.format(new Date());
 
         Random random = new Random();
