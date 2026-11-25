@@ -107,6 +107,10 @@
     <string name="label_discount">Giảm giá</string>
     <string name="label_free">Miễn phí</string>
     <string name="label_checkout_button">Đặt hàng</string>
+    <string name="label_checkout_count_format">Đặt hàng (%d)</string>
+    <string name="label_select_all">Chọn tất cả</string>
+    <string name="label_select_items_to_checkout">Chọn món muốn thanh toán</string>
+    <string name="error_no_items_selected">Vui lòng chọn ít nhất 1 sản phẩm</string>
     <string name="label_checkout_coming_soon">Thanh toán sắp có</string>
     <string name="label_empty_cart_title">Giỏ hàng của bạn đang trống</string>
     <string name="label_explore_snacks">Khám phá món ngon</string>

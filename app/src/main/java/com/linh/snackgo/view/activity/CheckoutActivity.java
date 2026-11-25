@@ -23,7 +23,10 @@ import com.linh.snackgo.utils.PriceFormatter;
 import com.linh.snackgo.utils.SessionManager;
 import com.linh.snackgo.utils.UiUtils;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Checkout Activity for order validation, payment method selection, summary display, and placing orders.
@@ -36,6 +39,7 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private String selectedPaymentMethod = AppConstants.PAYMENT_CASH;
     private boolean isPromoApplied = false;
+    private Set<Long> selectedProductIds = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +53,13 @@ public class CheckoutActivity extends AppCompatActivity {
         sessionManager = new SessionManager(this);
 
         isPromoApplied = getIntent().getBooleanExtra(IntentKeys.EXTRA_PROMO_APPLIED, false);
+        long[] selectedIdsArray = getIntent().getLongArrayExtra(IntentKeys.EXTRA_SELECTED_PRODUCT_IDS);
+        if (selectedIdsArray != null) {
+            selectedProductIds = new HashSet<>();
+            for (long id : selectedIdsArray) {
+                selectedProductIds.add(id);
+            }
+        }
 
         long userId = sessionManager.getUserId();
         int cartCount = cartController.getCartCount(userId);
@@ -77,7 +88,15 @@ public class CheckoutActivity extends AppCompatActivity {
 
     private void loadOrderSummary() {
         long userId = sessionManager.getUserId();
-        List<CartItem> cartItems = cartController.getCartItems(userId);
+        List<CartItem> allCartItems = cartController.getCartItems(userId);
+        List<CartItem> cartItems = new ArrayList<>();
+        if (allCartItems != null) {
+            for (CartItem item : allCartItems) {
+                if (selectedProductIds == null || selectedProductIds.contains(item.getProductId())) {
+                    cartItems.add(item);
+                }
+            }
+        }
         CartSummary summary = cartController.computeSummary(cartItems, isPromoApplied);
 
         // Populate compact item list with BlendImageView thumbnails
@@ -171,7 +190,8 @@ public class CheckoutActivity extends AppCompatActivity {
         binding.btnConfirmOrder.setEnabled(false);
 
         long userId = sessionManager.getUserId();
-        OrderController.OrderResult result = orderController.placeOrder(userId, receiverName, phone, address, selectedPaymentMethod, isPromoApplied);
+        List<Long> selectedIdsList = selectedProductIds != null ? new ArrayList<>(selectedProductIds) : null;
+        OrderController.OrderResult result = orderController.placeOrder(userId, receiverName, phone, address, selectedPaymentMethod, isPromoApplied, selectedIdsList);
 
         if (result.isSuccess()) {
             Intent intent = new Intent(this, OrderSuccessActivity.class);

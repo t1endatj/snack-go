@@ -125,21 +125,23 @@
 
                 </com.google.android.material.card.MaterialCardView>
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/btnCart"
+                <FrameLayout
                     android:layout_width="48dp"
                     android:layout_height="48dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    app:cardBackgroundColor="@color/surface"
-                    app:cardCornerRadius="24dp"
-                    app:cardElevation="3dp"
-                    app:strokeColor="@color/divider"
-                    app:strokeWidth="1dp">
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
 
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/btnCart"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:clickable="true"
+                        android:focusable="true"
+                        app:cardBackgroundColor="@color/surface"
+                        app:cardCornerRadius="24dp"
+                        app:cardElevation="3dp"
+                        app:strokeColor="@color/divider"
+                        app:strokeWidth="1dp">
 
                         <ImageView
                             android:layout_width="20dp"
@@ -149,23 +151,25 @@
                             android:src="@drawable/ic_nav_cart"
                             app:tint="@color/primary_ink" />
 
-                        <TextView
-                            android:id="@+id/tvCartBadge"
-                            android:layout_width="16dp"
-                            android:layout_height="16dp"
-                            android:layout_gravity="top|end"
-                            android:layout_marginTop="2dp"
-                            android:layout_marginEnd="2dp"
-                            android:background="@drawable/bg_indicator_active"
-                            android:gravity="center"
-                            android:textColor="@color/surface"
-                            android:textSize="11sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
+                    </com.google.android.material.card.MaterialCardView>
 
-                    </FrameLayout>
+                    <TextView
+                        android:id="@+id/tvCartBadge"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dp"
+                        android:layout_gravity="top|end"
+                        android:background="@drawable/bg_cart_badge"
+                        android:elevation="4dp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:minWidth="18dp"
+                        android:paddingHorizontal="4dp"
+                        android:textColor="@color/surface"
+                        android:textSize="10sp"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
 
-                </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
 
             </LinearLayout>
 

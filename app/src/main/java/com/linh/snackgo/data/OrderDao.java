@@ -81,8 +81,12 @@ public class OrderDao {
                         new Object[]{item.getQuantity(), item.getProductId()});
             }
 
-            // 4. Clear User's Cart
-            db.delete(DbConstants.TABLE_CART_ITEMS, DbConstants.COLUMN_CART_USER_ID + " = ?", new String[]{String.valueOf(order.getUserId())});
+            // 4. Remove only ordered items from User's Cart
+            for (OrderItem item : items) {
+                db.delete(DbConstants.TABLE_CART_ITEMS,
+                        DbConstants.COLUMN_CART_USER_ID + " = ? AND " + DbConstants.COLUMN_CART_PRODUCT_ID + " = ?",
+                        new String[]{String.valueOf(order.getUserId()), String.valueOf(item.getProductId())});
+            }
 
             db.setTransactionSuccessful();
             return true;

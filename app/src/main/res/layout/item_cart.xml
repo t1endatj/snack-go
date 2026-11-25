@@ -16,13 +16,24 @@
         android:layout_height="wrap_content"
         android:padding="12dp">
 
+        <com.google.android.material.checkbox.MaterialCheckBox
+            android:id="@+id/cbSelectCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            app:buttonTint="@color/primary_ink" />
+
         <!-- Product Thumbnail with BlendImageView on Light Pastel Background -->
         <com.linh.snackgo.view.widget.BlendImageView
             android:id="@+id/ivCartThumb"
             android:layout_width="72dp"
             android:layout_height="72dp"
-            android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
+            android:layout_marginStart="4dp"
+            android:layout_toEndOf="@id/cbSelectCartItem"
             app:blendCardBackgroundColor="@color/promo_input_bg"
             app:blendCornerRadius="16dp"
             app:blendPaddingRatio="0.08" />

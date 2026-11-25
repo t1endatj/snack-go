@@ -12,6 +12,8 @@ import com.linh.snackgo.databinding.ItemCartBinding;
 import com.linh.snackgo.model.CartItem;
 import com.linh.snackgo.utils.ImageUtils;
 import com.linh.snackgo.utils.PriceFormatter;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * ListAdapter for Cart items.
@@ -19,10 +21,17 @@ import com.linh.snackgo.utils.PriceFormatter;
 public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartViewHolder> {
 
     private final OnCartItemChangeListener listener;
+    private Set<Long> selectedProductIds = new HashSet<>();
 
     public interface OnCartItemChangeListener {
         void onQuantityChanged(CartItem item, int newQuantity);
         void onItemRemoved(CartItem item);
+        void onSelectionChanged(CartItem item, boolean isSelected);
+    }
+
+    public void setSelectedProductIds(Set<Long> selectedIds) {
+        this.selectedProductIds = selectedIds != null ? new HashSet<>(selectedIds) : new HashSet<>();
+        notifyDataSetChanged();
     }
 
     public CartAdapter(OnCartItemChangeListener listener) {
@@ -75,6 +84,14 @@ public class CartAdapter extends ListAdapter<CartItem, CartAdapter.CartViewHolde
             }
 
             binding.tvQuantity.setText(String.valueOf(item.getQuantity()));
+
+            binding.cbSelectCartItem.setOnCheckedChangeListener(null);
+            binding.cbSelectCartItem.setChecked(selectedProductIds.contains(item.getProductId()));
+            binding.cbSelectCartItem.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (listener != null) {
+                    listener.onSelectionChanged(item, isChecked);
+                }
+            });
 
             binding.btnMinus.setOnClickListener(v -> {
                 if (item.getQuantity() > 1 && listener != null) {
