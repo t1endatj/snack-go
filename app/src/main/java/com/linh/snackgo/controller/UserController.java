@@ -70,7 +70,7 @@ public class UserController {
         }
 
         String cleanPhone = phone.trim();
-        if (!cleanPhone.matches("^[0-9]{9,10}$")) {
+        if (!cleanPhone.matches(AppConstants.PHONE_REGEX)) {
             return UserResult.error(context.getString(R.string.error_invalid_phone), R.id.etPhone);
         }
 

@@ -16,6 +16,7 @@ public final class AppConstants {
     public static final int MIN_PASSWORD_LENGTH = 6;
     public static final int MIN_ADDRESS_LENGTH = 5;
     public static final String PHONE_PREFIX = "+84";
+    public static final String PHONE_REGEX = "^(0[35789][0-9]{8}|[35789][0-9]{8})$";
     public static final String CURRENCY_SYMBOL = "đ";
     public static final int SPLASH_DELAY_MS = 2000;
     public static final int SEARCH_DEBOUNCE_MS = 250;
