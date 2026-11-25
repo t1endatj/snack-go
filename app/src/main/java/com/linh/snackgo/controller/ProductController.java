@@ -1,7 +1,6 @@
 package com.linh.snackgo.controller;
 
 import android.content.Context;
-import com.linh.snackgo.constants.AppConstants;
 import com.linh.snackgo.data.ProductDao;
 import com.linh.snackgo.model.Product;
 import com.linh.snackgo.utils.NameUtils;
@@ -38,10 +37,8 @@ public class ProductController {
                     filtered.add(p);
                 } else {
                     String normName = NameUtils.stripAccents(p.getName());
-                    String normTag = NameUtils.stripAccents(p.getTag());
-                    String normCat = getNormalizedCategoryKeywords(p.getCategory());
 
-                    if (normName.contains(cleanKeyword) || normTag.contains(cleanKeyword) || normCat.contains(cleanKeyword)) {
+                    if (normName.contains(cleanKeyword)) {
                         filtered.add(p);
                     }
                 }
@@ -55,17 +52,6 @@ public class ProductController {
         }
 
         return filtered;
-    }
-
-    private String getNormalizedCategoryKeywords(String category) {
-        if (AppConstants.CATEGORY_SNACK.equalsIgnoreCase(category)) {
-            return "snack an vat";
-        } else if (AppConstants.CATEGORY_DRINK.equalsIgnoreCase(category)) {
-            return "nuoc uong do uong";
-        } else if (AppConstants.CATEGORY_CANDY.equalsIgnoreCase(category)) {
-            return "banh keo";
-        }
-        return "";
     }
 
     public Product getProductById(long id) {

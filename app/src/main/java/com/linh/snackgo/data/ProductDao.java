@@ -116,10 +116,8 @@ public class ProductDao {
         }
 
         if (keyword != null && !keyword.trim().isEmpty()) {
-            selection.append(" AND (").append(DbConstants.COLUMN_PRODUCT_NAME).append(" LIKE ? OR ")
-                     .append(DbConstants.COLUMN_PRODUCT_TAG).append(" LIKE ?)");
+            selection.append(" AND ").append(DbConstants.COLUMN_PRODUCT_NAME).append(" LIKE ?");
             String likePattern = "%" + keyword.trim() + "%";
-            argsList.add(likePattern);
             argsList.add(likePattern);
         }
 
