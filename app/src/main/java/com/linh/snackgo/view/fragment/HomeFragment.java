@@ -29,6 +29,7 @@ import com.linh.snackgo.databinding.DialogSortFilterBinding;
 import com.linh.snackgo.databinding.FragmentHomeBinding;
 import com.linh.snackgo.model.CartItem;
 import com.linh.snackgo.model.Product;
+import com.linh.snackgo.utils.FavoriteManager;
 import com.linh.snackgo.utils.ImageUtils;
 import com.linh.snackgo.utils.NameUtils;
 import com.linh.snackgo.utils.PriceFormatter;
@@ -277,6 +278,8 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                 selectedCategory = AppConstants.CATEGORY_DRINK;
             } else if (checkedIds.contains(R.id.chipCandy)) {
                 selectedCategory = AppConstants.CATEGORY_CANDY;
+            } else if (checkedIds.contains(R.id.chipFavorite)) {
+                selectedCategory = AppConstants.CATEGORY_FAVORITE;
             } else {
                 selectedCategory = AppConstants.CATEGORY_ALL;
             }
@@ -301,6 +304,9 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
 
         binding.chipCandy.setChipBackgroundColorResource(checkedIds.contains(R.id.chipCandy) ? R.color.primary_ink : R.color.surface);
         binding.chipCandy.setTextColor(checkedIds.contains(R.id.chipCandy) ? activeText : inactiveText);
+
+        binding.chipFavorite.setChipBackgroundColorResource(checkedIds.contains(R.id.chipFavorite) ? R.color.primary_ink : R.color.surface);
+        binding.chipFavorite.setTextColor(checkedIds.contains(R.id.chipFavorite) ? activeText : inactiveText);
     }
 
     private void loadProducts() {
@@ -311,11 +317,25 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         binding.progressHome.setVisibility(View.VISIBLE);
         productExecutor.execute(() -> {
             try {
+                boolean isFavoriteFilter = AppConstants.CATEGORY_FAVORITE.equals(selectedCategory);
+                String queryCategory = isFavoriteFilter ? AppConstants.CATEGORY_ALL : selectedCategory;
                 List<Product> products = productController.getActiveProducts(
-                        selectedCategory,
+                        queryCategory,
                         currentKeyword,
                         sortOption
                 );
+                if (isFavoriteFilter && isAdded()) {
+                    FavoriteManager favManager = new FavoriteManager(requireContext());
+                    long uid = sessionManager.getUserId();
+                    List<Product> favOnly = new ArrayList<>();
+                    for (Product p : products) {
+                        if (favManager.isFavorite(uid, p.getId())) {
+                            favOnly.add(p);
+                        }
+                    }
+                    products = favOnly;
+                }
+                final List<Product> finalProducts = products;
                 if (!isAdded()) {
                     return;
                 }
@@ -324,10 +344,10 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
                         return;
                     }
                     binding.progressHome.setVisibility(View.GONE);
-                    binding.tvEmptyStateMessage.setText(R.string.msg_empty_search);
+                    binding.tvEmptyStateMessage.setText(isFavoriteFilter ? R.string.msg_empty_favorite : R.string.msg_empty_search);
                     binding.btnClearFilter.setText(R.string.label_clear_filter);
-                    adapter.submitList(new ArrayList<>(products));
-                    if (products.isEmpty()) {
+                    adapter.submitList(new ArrayList<>(finalProducts));
+                    if (finalProducts.isEmpty()) {
                         binding.layoutEmptyState.setVisibility(View.VISIBLE);
                         binding.rvProducts.setVisibility(View.GONE);
                     } else {
@@ -411,6 +431,13 @@ public class HomeFragment extends Fragment implements ProductAdapter.OnProductCl
         if (success) {
             Toast.makeText(requireContext(), R.string.label_added_to_cart, Toast.LENGTH_SHORT).show();
             updateMiniCartUI();
+        }
+    }
+
+    @Override
+    public void onFavoriteToggled(Product product, boolean isFavorite) {
+        if (AppConstants.CATEGORY_FAVORITE.equals(selectedCategory) && !isFavorite) {
+            loadProducts();
         }
     }
 

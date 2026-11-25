@@ -65,6 +65,7 @@
 - **Search & Filter Accuracy**: Removed long product descriptions from search matching in `ProductController` and `ProductDao.searchActive` (preventing false matches on brand boilerplate like "các loại bánh kẹo" in snack descriptions), and matched against normalized product name, tag, and Vietnamese category keywords.
 - **Product Detail Cart Badge Clipping**: Moved `tvCartBadge` outside the circular `MaterialCardView` (`btnCart`) into a shared `FrameLayout` with `elevation="4dp"` and a dedicated circular/pill `bg_cart_badge` drawable so the badge is never clipped by the card's corner radius.
 - **Selective Cart Checkout**: Added item selection checkboxes (`cbSelectCartItem`) and a "Chọn tất cả" option (`cbSelectAll`) in `CartFragment` & `CartAdapter` (unselected by default), filtering summary calculations, `CheckoutActivity`, `OrderController`, and `OrderDao` so only selected items are ordered and removed from the cart.
+- **Favorite Product Filter Chip**: Added a "Yêu thích" filter chip (`chipFavorite`) to `HomeFragment` so users can filter and browse their hearted products directly from the Home screen, with live removal when un-hearted and a dedicated empty state.
 
 ---
 

@@ -73,6 +73,8 @@
     <string name="category_snack">Snack</string>
     <string name="category_drink">Nước uống</string>
     <string name="category_candy">Bánh kẹo</string>
+    <string name="category_favorite">Yêu thích</string>
+    <string name="msg_empty_favorite">Bạn chưa thả tim sản phẩm nào</string>
     <string name="title_collection">Bộ sưu tập</string>
     <string name="badge_super_hot">Siêu hot</string>
     <string name="label_see_all">Xem tất cả</string>

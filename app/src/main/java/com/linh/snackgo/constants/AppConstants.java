@@ -58,6 +58,7 @@ public final class AppConstants {
     public static final String CATEGORY_SNACK = "snack";
     public static final String CATEGORY_DRINK = "drink";
     public static final String CATEGORY_CANDY = "candy";
+    public static final String CATEGORY_FAVORITE = "favorite";
 
     // Order Statuses
     public static final String ORDER_STATUS_PENDING = "PENDING";
