@@ -112,7 +112,7 @@ public class AuthController {
         }
 
         String cleanPhone = phone.trim();
-        if (!cleanPhone.matches("^[0-9]{9,10}$")) {
+        if (!cleanPhone.matches(AppConstants.PHONE_REGEX)) {
             return AuthResult.error(context.getString(R.string.error_invalid_phone), R.id.etPhone);
         }
 

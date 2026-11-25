@@ -61,6 +61,7 @@
 - **Category Filter Correction**: Corrected category of "Bánh Pâté Chaud nhân thịt" from `snack` to `candy` (`AppConstants.CATEGORY_CANDY`) in seed data and database migration v30, ensuring it displays under "Bánh kẹo" rather than "Snack".
 - **Order Thumbnail Image Mapping**: Corrected `OrderDao` to use `product.getCoverImage()` and updated `OrderAdapter` to load thumbnails via `ImageUtils.loadProductImage()`, resolving image mismatch in order history and synchronizing `snack_que_dorkbua.jpg`.
 - **Cart & Checkout Product Image Attachment**: Updated `CartDao.getItems()` to attach images from `ProductImageDao`, ensuring `getCoverImage()` returns the authentic product asset in Cart and Checkout, and synchronized `candy_hershey_kisses.jpg`.
+- **Vietnamese Phone Regex Validation**: Tightened phone number regex across `AuthController`, `UserController`, and `OrderController` with `AppConstants.PHONE_REGEX` to strictly validate Vietnamese carrier prefixes (`03`, `05`, `07`, `08`, `09` or `3`, `5`, `7`, `8`, `9` with country code `+84`).
 
 ---
 

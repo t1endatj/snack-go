@@ -44,7 +44,7 @@
     <string name="error_empty_email">Vui lòng nhập Email</string>
     <string name="error_invalid_email">Email không đúng định dạng</string>
     <string name="error_empty_phone">Vui lòng nhập số điện thoại</string>
-    <string name="error_invalid_phone">Số điện thoại phải từ 9-10 chữ số</string>
+    <string name="error_invalid_phone">Số điện thoại không đúng định dạng (đầu số 03, 05, 07, 08, 09)</string>
     <string name="error_password_length">Mật khẩu phải từ 6 ký tự trở lên</string>
     <string name="error_empty_confirm_password">Vui lòng xác nhận mật khẩu</string>
     <string name="error_password_mismatch">Mật khẩu xác nhận không trùng khớp</string>
